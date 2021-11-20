@@ -69,13 +69,17 @@ body {
     height: 4rem;
     width: 4rem;
     margin-bottom: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .full {
     background-image: url('./../assets/img/heart-full.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+}
+
+.none {
+    background-image: url('./../assets/img/heart-none.png');
 }
 
 .heart-container {
