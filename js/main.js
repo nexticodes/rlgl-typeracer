@@ -35,6 +35,8 @@ let timerInterval;
 let timePassed;
 // randomLightSec that will hold value representing secs light will display.
 let randomLightSec;
+// countdown to game.
+let countdownToGame;
 
 /*----- cached element references -----*/
 // input element
@@ -144,6 +146,7 @@ function inputController(e) {
     if (isInputValid) {
         inputEl.style.color = '#0fa';
         currentWordEl.classList.remove('invalid');
+        gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
         if (playerInput.includes(' ')) {
             wordsSwitch[currWordIdx] = 1;
             updateWordsOnScreen();
@@ -154,6 +157,7 @@ function inputController(e) {
             updateQS();
         }
     } else {
+        gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
         inputEl.style.color = '#FE0300';
         currentWordEl.classList.add('invalid');
         currentWordEl.classList.remove('valid');
@@ -173,7 +177,7 @@ function renderLight() {
     // green light for 4-8 seconds.
     // yellow light for 1 - 1.5 seconds.
     // set red light between 3-6 seconds.
-    lightEl.classList.remove('red', 'yellow', 'green');
+    lightEl.classList.remove('red', 'yellow', 'green', 'white', 'blue');
     lightEl.classList.add(currColor.color);
 }
 // 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
@@ -227,6 +231,8 @@ function handleFocus() {
         inputEl.setAttribute('placeholder', '');
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
+        gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
+        clearTimeout();
         clearInterval(timerInterval);
     }
 }
