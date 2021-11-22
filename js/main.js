@@ -208,7 +208,7 @@ function getRandomSec(color) {
 // helper function that will handle focus.
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
-    inputEl.classList.toggle('blocked');
+    inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
         inputEl.setAttribute('placeholder', '');
         init();

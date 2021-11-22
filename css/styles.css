@@ -22,7 +22,6 @@ body {
 }
 
 #screen {
-    border: 5px double white;
     background-color: black;
     justify-self: center;
     align-self: center;
@@ -30,6 +29,10 @@ body {
     width: 60rem;
     margin: auto;
     padding: 2rem 5rem;
+}
+
+.active {
+    border: 5px double white;
     box-shadow: 0px 0px 25px inset whitesmoke;
 }
 
@@ -91,7 +94,7 @@ body {
 }
 
 input {
-    height: 4rem;
+    height: 5rem;
     width: 25rem;
     font-size: 36px;
     border: none;
@@ -102,6 +105,44 @@ input {
     color: white;
     font-weight: bolder;
     border-radius: 25px;
+    display: flex;
+    padding: 0;
+}
+
+.disconnected {
+    z-index: 5;
+    background-color: rgb(0, 153, 255);
+    box-shadow:
+    /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* Green glow */
+    0 0 12px rgb(0, 153, 255),
+    0 0 15px rgb(0, 153, 255),
+    0 0 18px rgb(0, 153, 255),
+    0 0 25px rgb(0, 153, 255),
+    0 0 30px rgb(0, 153, 255)
+}
+
+.valid {
+    color: #0fa;
+}
+
+.invalid {
+    color: #FE0300;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1;
+    text-shadow: 0px 0px 5px black;
+    padding: 0;
+    margin: 0;
+}
+
+input:hover{
+    cursor: pointer;
 }
 
 .side {
@@ -119,6 +160,23 @@ input {
     width: 70vw;
     margin-top: 3rem;
     background-color: #363636;
+}
+
+.neon-invalid {
+    box-shadow:
+    /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* Green glow */
+    0 0 12px #FE0300,
+    0 0 15px #FE0300,
+    0 0 18px #FE0300,
+    0 0 25px #FE0300,
+    0 0 30px #FE0300;
+}
+
+.neon-valid {
     box-shadow:
     /* White glow */
     0 0 3px #fff,
@@ -131,8 +189,6 @@ input {
     0 0 25px #0fa,
     0 0 30px #0fa;
 }
-
-
 
 .light {
     height: 8rem;
@@ -175,35 +231,4 @@ footer {
     align-items: center;
     justify-content: center;
     z-index: 5;
-}
-
-.valid {
-    color: #0fa;
-}
-
-.invalid {
-    color: #FE0300;
-}
-
-.blocked {
-    z-index: 5;
-
-    background-color: rgb(0, 153, 255);
-    box-shadow:
-    /* White glow */
-    0 0 3px #fff,
-    0 0 5px #fff,
-    0 0 14px #fff,
-    /* Green glow */
-    0 0 12px rgb(0, 153, 255),
-    0 0 15px rgb(0, 153, 255),
-    0 0 18px rgb(0, 153, 255),
-    0 0 25px rgb(0, 153, 255),
-    0 0 30px rgb(0, 153, 255)
-}
-
-::placeholder {
-    color: white;
-    opacity: 1;
-    text-shadow: 0px 0px 10px black;
 }
