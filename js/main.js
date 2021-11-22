@@ -87,7 +87,6 @@ function inputController(e) {
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
     if (isInputValid){
         input.style.color = '#0fa';
-        console.log(currentWordEl)
         currentWordEl.classList.remove('invalid');
         if (playerInput.includes(' ')){
             wordsSwitch[currWordIdx] = 1;
