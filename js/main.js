@@ -88,7 +88,7 @@ function init() {
         {
             color: 'yellow',
             timeMin: 1,
-            timeMax: 3
+            timeMax: 4
         },
         {
             color: 'red',
@@ -124,10 +124,10 @@ function renderWords() {
 // render time.
 function startTimer() {
     timerInterval = setInterval(function () {
+        lightHelper();
         time--;
         timePassed++;
         timerEl.innerText = time;
-        lightHelper();
         if (time === 0) {
             clearInterval(timerInterval);
         }
