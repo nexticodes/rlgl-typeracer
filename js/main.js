@@ -35,8 +35,6 @@ let timerInterval;
 let timePassed;
 // randomLightSec that will hold value representing secs light will display.
 let randomLightSec;
-// countdown to game.
-let countdownToGame;
 
 /*----- cached element references -----*/
 // input element
@@ -226,7 +224,7 @@ function handleFocus() {
         setTimeout(function(){
             init();
             gameContainerEl.classList.replace('neon-loading', 'neon-valid')
-        }, 7500);
+        }, 6000);
         power();
         inputEl.setAttribute('placeholder', '');
     } else {
@@ -244,6 +242,7 @@ function power(){
     gameContainerEl.classList.add('neon-loading');
     flickerGoLight();
     fillHearts();
+    startCountdownToGame();
 }
 
 
@@ -271,4 +270,21 @@ function flickerGoLight(){
         lightEl.classList.toggle('blue');
         increment++;
     }, 250);
+}
+
+function startCountdownToGame(){
+    countdownToGame = 5;
+    screenOutputEl.innerHTML = `<h3 id="ready">GET READY!</h3> <h1 id="countdown">${(countdownToGame)}</h1>`;
+    let countdownEl = document.querySelector('#countdown');
+    let cdInterval = setInterval(function(){
+        countdownToGame--;
+        countdownEl.innerText = countdownToGame;
+        if (countdownToGame < 1){
+            document.querySelector('#ready').innerText = '';
+            countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
+        } else if (countdownToGame === 0) {
+            screenEl = '';
+            clearInterval(cdInterval);
+        }
+    }, 1000);
 }
