@@ -162,7 +162,11 @@ function inputController(e) {
 }
 // 4) render function for heart container, render hearts based on array.
 function renderHearts(){
-
+    hearts.forEach( (h,i) => {
+        if (!h) {
+            document.querySelector(`#h${i}`).replace('full', 'none');
+        };
+    });
 }
 // 5) render function for light change
 function renderLight() {
@@ -213,11 +217,11 @@ function getRandomSec(color) {
 // helper function that will handle focus.
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
+    power();
     inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
         inputEl.setAttribute('placeholder', '');
         init();
-        power();
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
         clearInterval(timerInterval);
@@ -227,8 +231,8 @@ function handleFocus() {
 
 // Power up function that will apply all styles signifying power up.
 function power(){
-    screenEl.classList.add('.active');
-    gameContainerEl.classList.add('.neon-valid');
+    screenEl.classList.add('active');
+    gameContainerEl.classList.add('neon-valid');
     let hIdx = 0;
     const heartFillInterval = setInterval(function(){
         if (hIdx === 4){
