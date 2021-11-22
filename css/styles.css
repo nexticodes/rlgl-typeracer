@@ -112,7 +112,6 @@ input {
 .disconnected {
     z-index: 5;
     background-color: rgb(0, 153, 255);
-
 }
 
 .valid {
@@ -164,6 +163,23 @@ input:hover{
 }
 
 .neon-invalid {
+    animation: flowinvalid 3s infinite;
+    box-shadow:
+    /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* Green glow */
+    0 0 5px #FE0300,
+    0 0 7px #FE0300,
+    0 0 10px #FE0300,
+    0 0 15px #FE0300,
+    0 0 18px #FE0300;
+}
+
+@keyframes flowinvalid {
+
+    50% {
     box-shadow:
     /* White glow */
     0 0 3px #fff,
@@ -175,9 +191,25 @@ input:hover{
     0 0 18px #FE0300,
     0 0 25px #FE0300,
     0 0 30px #FE0300;
+    }
 }
 
 .neon-valid {
+    animation: flowvalid 3s infinite;
+    box-shadow:
+    /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* Green glow */
+    0 0 5px #0fa,
+    0 0 7px #0fa,
+    0 0 10px #0fa,
+    0 0 15px #0fa,
+    0 0 18px #0fa
+}
+@keyframes flowvalid {
+    50% {
     box-shadow:
     /* White glow */
     0 0 3px #fff,
@@ -189,6 +221,44 @@ input:hover{
     0 0 18px #0fa,
     0 0 25px #0fa,
     0 0 30px #0fa;
+    }
+}
+
+.neon-loading {
+    animation: loadlight 7s forwards;
+}
+
+.neon-unload {
+    animation: loadlight 4s reverse;
+}
+
+@keyframes loadlight {
+    99% { 
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 12px rgb(0, 153, 255),
+        0 0 15px rgb(0, 153, 255),
+        0 0 18px rgb(0, 153, 255),
+        0 0 25px rgb(0, 153, 255),
+        0 0 30px rgb(0, 153, 255) 
+    }
+    100%{
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 12px #0fa,
+        0 0 15px #0fa,
+        0 0 18px #0fa,
+        0 0 25px #0fa,
+        0 0 30px #0fa;
+    }
 }
 
 .light {
@@ -211,10 +281,19 @@ input:hover{
     box-shadow: 0px 0px 25px rgb(243, 247, 7);
 }
 
-
 .red { 
     background-color: rgb(247, 15, 7);
     box-shadow: 0px 0px 25px rgb(247, 15, 7);
+}
+
+.blue {
+    background-color: rgb(0, 153, 255);
+    box-shadow: 0px 0px 25px rgb(0, 153, 255);
+}
+
+.white {
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 25px whitesmoke;
 }
 
 footer {
