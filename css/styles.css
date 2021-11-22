@@ -139,10 +139,18 @@ input {
     width: 8rem;
     border: 2px solid black;
     border-radius: 50%;
-    background-color: rgb(7, 247, 7);
-    box-shadow: 0px 0px 25px rgb(7, 247, 7);
     border: none;
     margin: auto;
+}
+
+.green {
+    background-color: rgb(7, 247, 7);
+    box-shadow: 0px 0px 25px rgb(7, 247, 7);
+}
+
+.red { 
+    background-color: rgb(247, 15, 7);
+    box-shadow: 0px 0px 25px rgb(247, 15, 7);
 }
 
 footer {
