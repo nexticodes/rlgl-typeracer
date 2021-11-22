@@ -39,4 +39,5 @@ Render functions
 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 */
 
-// input checker
+// input checker to see if the input value is equal to word needed to be typed.
+// 
