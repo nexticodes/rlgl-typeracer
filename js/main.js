@@ -31,6 +31,10 @@ let lightIndex;
 let numWordsCompleted;
 // timer interval.
 let timerInterval;
+// time passed.
+let timePassed;
+// randomLightSec that will hold value representing secs light will display.
+let randomLightSec;
 
 /*----- cached element references -----*/
 // input element
@@ -38,11 +42,11 @@ const inputEl = document.querySelector('#user-input');
 // screen's p element.
 const screenOutputEl = document.querySelector('#screen-output');
 // game container (for changing color.)
-const gameContainerEl = document.querySelector('game-container');
+const gameContainerEl = document.querySelector('.game-container');
 // light (for changing color);
-const lightEl = document.querySelector('light');
+const lightEl = document.querySelector('.light');
 // heart container.
-const heartContainerEl = document.querySelector('heart-container');
+const heartContainerEl = document.querySelector('.heart-container');
 // timer element.
 const timerEl = document.querySelector('#timer');
 
@@ -61,9 +65,9 @@ let currentWordEl;
 // --> input
 inputEl.addEventListener('input', inputController);
 // --> onFocus
-inputEl.addEventListener('focus', handleFocus);
+inputEl.addEventListener('focusin', handleFocus);
 // --> unfocus
-inputEl.addEventListener('blur', handleFocus);
+inputEl.addEventListener('focusout', handleFocus);
 // restart game button
 
 /*----- functions -----*/
@@ -72,15 +76,34 @@ function init() {
     // set timer.
     time = 60;
     wordsToDisplay = lorem.split(' ');
-    wordsArr= wordsToDisplay.map(e => e + ' ');
-    wordsSwitch = wordsArr.map( e => 0);
+    wordsArr = wordsToDisplay.map(e => e + ' ');
+    wordsSwitch = wordsArr.map(e => 0);
     hearts = [1, 1, 1, 1, 1];
-    lightColors = ['green', 'yellow', 'red'];
-    lightIndex = 2;
+    lightColors = [
+        {
+            color: 'green',
+            timeMin: 4,
+            timeMax: 8
+        },
+        {
+            color: 'yellow',
+            timeMin: 1,
+            timeMax: 3
+        },
+        {
+            color: 'red',
+            timeMin: 3,
+            timeMax: 6
+        }
+    ]
+    lightIndex = 0;
+    currColor = lightColors[lightIndex];
+    randomLightSec = getRandomSec(currColor);
     currWordIdx = 0;
     numWordsCompleted = 0;
     isInputValid = false;
     isPlayerConnected = false;
+    timePassed = 0;
     startTimer();
     renderLight();
     renderWords();
@@ -99,21 +122,26 @@ function renderWords() {
 };
 
 // render time.
-function startTimer(){
-    timerInterval = setInterval(function() {
-        timerEl.innerText = time;
+function startTimer() {
+    timerInterval = setInterval(function () {
         time--;
-    }, 1000)
+        timePassed++;
+        timerEl.innerText = time;
+        lightHelper();
+        if (time === 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
 }
 
 // 3) controller / render function based on if the user input is valid
 function inputController(e) {
     let playerInput = e.target.value;
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
-    if (isInputValid){
+    if (isInputValid) {
         inputEl.style.color = '#0fa';
         currentWordEl.classList.remove('invalid');
-        if (playerInput.includes(' ')){
+        if (playerInput.includes(' ')) {
             wordsSwitch[currWordIdx] = 1;
             updateWordsOnScreen();
             inputEl.value = '';
@@ -135,63 +163,56 @@ function renderLight() {
     // green light for 4-8 seconds.
     // yellow light for 1 - 1.5 seconds.
     // set red light between 3-6 seconds.
-    // lightEl.classList.add = lightColors[0];
-    lightHelper(lightColors[lightIndex])
-    console.log(lightIndex);
-    console.log('current light', lightColors[lightIndex]);
+    lightEl.classList.remove('red', 'yellow', 'green');
+    lightEl.classList.add(currColor.color);
 }
 // 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
 
 // update word on screen function based on wordsSwitch.
-function updateWordsOnScreen(){
+function updateWordsOnScreen() {
 
 }
 
 // helper function for ease of typing.
-function updateQS(){
+function updateQS() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
 }
 
-// helper function that generates random number of milliseconds based on argument and switches the current light index after time has passed.
-// 'green' -- 4000 to 8000 ms;
-// 'yellow' -- 1000 to 1500 ms;
-// 'red' -- 3000 to 6000 ms;
-function lightHelper(color){
-    let randomMS = 0;
-    if (color === 'red'){
-        randomMS = getRandomMS(3000, 6000);
-    } else if (color === 'yellow') {
-        randomMS = getRandomMS(1000, 1500);
-    } else if (color === 'green'){
-        randomMS = getRandomMS(4000, 8000);
-    }
-    let lightSwitchInterval = setInterval(function(){
-        // green or yellow
-        if (lightIndex === 0 || lightIndex === 1){ 
-            // flip 
+// Helper function that checks on timePassed global variable.
+// Certain things will trigger as time passes.
+// NOTE timePassed variable is more like timePassed since light switch.
+function lightHelper() {
+    // if light is green and timePassed is equal to random switch time.
+    if (randomLightSec === timePassed) {
+        if (lightIndex === 0 || lightIndex === 1){
             lightIndex++;
-        // red
-        } else if (lightIndex === 2){
+        } else {
             lightIndex = 0;
         }
-    }, randomMS);
+        // set a different random secs based on light index.
+        currColor = lightColors[lightIndex];
+        randomLightSec = getRandomSec(currColor);
+        // reset time passed;
+        timePassed = 0;
+    }
+    renderLight();
 }
 
-// helper function get random between two values.
-function getRandomMS(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-} 
+// helper function get random between two values based on color;
+function getRandomSec(color) {
+    return Math.floor(Math.random() * (color.timeMax - color.timeMin) + color.timeMin);
+}
 
 // helper function that will handle focus.
-function handleFocus(){
+function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('blocked');
-    if (inputEl.getAttribute('placeholder') === 'CONNECT'){
+    if (inputEl.getAttribute('placeholder') === 'CONNECT') {
         inputEl.setAttribute('placeholder', '');
         init();
     } else {
-        inputEl.setAttribute('placeholder', 'CONNECT' );
+        inputEl.setAttribute('placeholder', 'CONNECT');
         clearInterval(timerInterval);
     }
 }
