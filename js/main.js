@@ -23,18 +23,22 @@ let currWordIdx;
 let hearts;
 // isPlayerConnected (on focus!)
 let isPlayerConnected;
+// light (red, yellow, or green);
+let lightColor;
+// number of words completed.
+let numWordsCompleted;
 
 /*----- cached element references -----*/
 // input element
-const input = document.querySelector('#user-input');
+const inputEl = document.querySelector('#user-input');
 // screen's p element.
-const screenOutput = document.querySelector('#screen-output');
+const screenOutputEl = document.querySelector('#screen-output');
 // game container (for changing color.)
-const gameContainer = document.querySelector('game-container');
+const gameContainerEl = document.querySelector('game-container');
 // light (for changing color);
-const light = document.querySelector('light');
+const lightEl = document.querySelector('light');
 // heart container.
-const heartContainer = document.querySelector('heart-container');
+const heartContainerEl = document.querySelector('heart-container');
 
 // current word element. DYNAMIC.
 let currentWordEl;
@@ -49,7 +53,7 @@ let currentWordEl;
 // rules button
 // input element listener
 // --> input
-input.addEventListener('input', inputController);
+inputEl.addEventListener('input', inputController);
 // --> onFocus
 // --> unfocus
 // restart game button
@@ -64,6 +68,7 @@ function init() {
     wordsSwitch = wordsArr.map( e => 0);
     hearts = [1, 1, 1, 1, 1];
     currWordIdx = 0;
+    numWordsCompleted = 0;
     isInputValid = false;
     isPlayerConnected = false;
     renderWords();
@@ -79,25 +84,26 @@ function renderWords() {
         htmlString += `<span id=w${i}>${word}</span> `;
         return htmlString;
     }, '')
-    screenOutput.innerHTML = outputHTML;
+    screenOutputEl.innerHTML = outputHTML;
 };
 // 2) controller / render function based on if the user input is valid
 function inputController(e) {
     let playerInput = e.target.value;
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
     if (isInputValid){
-        input.style.color = '#0fa';
+        inputEl.style.color = '#0fa';
         currentWordEl.classList.remove('invalid');
         if (playerInput.includes(' ')){
             wordsSwitch[currWordIdx] = 1;
             updateWordsOnScreen();
-            input.value = '';
+            inputEl.value = '';
             currentWordEl.classList.add('valid');
             currWordIdx++;
+            numWordsCompleted++;
             updateQS();
         }
     } else {
-        input.style.color = '#FE0300';
+        inputEl.style.color = '#FE0300';
         currentWordEl.classList.add('invalid');
         currentWordEl.classList.remove('valid');
         wordsSwitch[currWordIdx] = -1;
@@ -105,6 +111,11 @@ function inputController(e) {
 }
 // 3) render function for heart container, render hearts based on array.
 // 4) render function for light change
+function renderLight() {
+    // green light for 4-8 seconds.
+    // yellow light for 1 - 1.5 seconds.
+    // set red light between 3-6 seconds.
+}
 // 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
 
@@ -117,3 +128,8 @@ function updateWordsOnScreen(){
 function updateQS(){
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
 }
+
+// helper function that returns random number of milliseconds based on argument.
+// 'green' -- 4000 to 8000 ms;
+// 'yellow' -- 1000 to 1500 ms;
+// 'red' -- 3000 to 6000 ms;
