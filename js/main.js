@@ -217,3 +217,9 @@ function handleFocus() {
         clearInterval(timerInterval);
     }
 }
+
+
+// Power up function that will apply all styles signifying power up.
+function powerUp(){
+
+}
