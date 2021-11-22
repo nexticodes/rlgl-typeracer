@@ -217,11 +217,14 @@ function getRandomSec(color) {
 // helper function that will handle focus.
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
-    power();
     inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
+        setTimeout(function(){
+            init();
+            gameContainerEl.classList.replace('neon-loading', 'neon-valid')
+        }, 7500);
+        power();
         inputEl.setAttribute('placeholder', '');
-        init();
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
         clearInterval(timerInterval);
@@ -232,7 +235,13 @@ function handleFocus() {
 // Power up function that will apply all styles signifying power up.
 function power(){
     screenEl.classList.add('active');
-    gameContainerEl.classList.add('neon-valid');
+    gameContainerEl.classList.add('neon-loading');
+    flickerGoLight();
+    fillHearts();
+}
+
+
+function fillHearts(){
     let hIdx = 0;
     const heartFillInterval = setInterval(function(){
         if (hIdx === 4){
@@ -241,4 +250,19 @@ function power(){
         document.querySelector(`#h${hIdx}`).classList.replace('none', 'full');
         hIdx++;
     }, 500);
+}
+
+function flickerGoLight(){
+    let increment = 0;
+    lightEl.classList.add('white');
+    const lightFlickInterval = setInterval(function(){
+        if (increment == 10){
+            lightEl.classList.remove('blue');
+            lightEl.classList.remove('white');
+            clearInterval(lightFlickInterval);
+        };
+        lightEl.classList.toggle('white');
+        lightEl.classList.toggle('blue');
+        increment++;
+    }, 250);
 }
