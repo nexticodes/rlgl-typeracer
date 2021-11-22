@@ -72,6 +72,8 @@ init();
 // 1) Render function to render all of the words into screen.
 function renderWords() {
     screenOutput.innerHTML = lorem;
+    console.log(wordsSwitch);
+    console.log(wordsArr[currWordIdx]);
 };
 // 2) controller / render function based on if the user input is valid
 function inputController(e) {
@@ -79,13 +81,17 @@ function inputController(e) {
     if (wordsArr[currWordIdx].includes(playerInput)){
         input.style.color = '#0fa';
         if (playerInput.includes(' ')){
+            wordsSwitch[currWordIdx] = 1;
+            renderWords();
             input.value = '';
+            currWordIdx++;
         }
     } else {
         input.style.color = '#FE0300';
+        wordsSwitch[currWordIdx] = -1;
+        renderWords();
     }
 }
 // 3) render function for heart container, render hearts based on array.
 // 4) render function for light change
 // 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
-
