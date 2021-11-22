@@ -73,8 +73,7 @@ inputEl.addEventListener('focusout', handleFocus);
 /*----- functions -----*/
 // init function initialize all variables.
 function init() {
-    // set timer.
-    time = 60;
+    time = 0;
     wordsToDisplay = lorem.split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
     wordsSwitch = wordsArr.map(e => 0);
@@ -123,6 +122,8 @@ function renderWords() {
 
 // render time.
 function startTimer() {
+    time = 60;
+    timerEl.innerText = time;
     timerInterval = setInterval(function () {
         lightHelper();
         time--;
