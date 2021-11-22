@@ -24,7 +24,9 @@ let hearts;
 // isPlayerConnected (on focus!)
 let isPlayerConnected;
 // light (red, yellow, or green);
-let lightColor;
+let lightColors;
+// light index;'
+let lightIndex;
 // number of words completed.
 let numWordsCompleted;
 
@@ -67,10 +69,13 @@ function init() {
     wordsArr= wordsToDisplay.map(e => e + ' ');
     wordsSwitch = wordsArr.map( e => 0);
     hearts = [1, 1, 1, 1, 1];
+    lightColors = ['green', 'yellow', 'red'];
+    lightIndex = 2;
     currWordIdx = 0;
     numWordsCompleted = 0;
     isInputValid = false;
     isPlayerConnected = false;
+    renderLight();
     renderWords();
     updateQS();
 }
@@ -115,6 +120,10 @@ function renderLight() {
     // green light for 4-8 seconds.
     // yellow light for 1 - 1.5 seconds.
     // set red light between 3-6 seconds.
+    // lightEl.classList.add = lightColors[0];
+    lightHelper(lightColors[lightIndex])
+    console.log(lightIndex);
+    console.log('current light', lightColors[lightIndex]);
 }
 // 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
@@ -129,7 +138,32 @@ function updateQS(){
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
 }
 
-// helper function that returns random number of milliseconds based on argument.
+// helper function that generates random number of milliseconds based on argument and switches the current light index after time has passed.
 // 'green' -- 4000 to 8000 ms;
 // 'yellow' -- 1000 to 1500 ms;
 // 'red' -- 3000 to 6000 ms;
+function lightHelper(color){
+    let randomMS = 0;
+    if (color === 'red'){
+        randomMS = getRandomMS(3000, 6000);
+    } else if (color === 'yellow') {
+        randomMS = getRandomMS(1000, 1500);
+    } else if (color === 'green'){
+        randomMS = getRandomMS(4000, 8000);
+    }
+    let lightSwitchInterval = setInterval(() => {
+        // green or yellow
+        if (lightIndex === 0 || lightIndex === 1){ 
+            // flip 
+            lightIndex++;
+        // red
+        } else if (lightIndex === 2){
+            lightIndex = 0;
+        }
+    }, randomMS);
+}
+
+// helper function get random between two values.
+function getRandomMS(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+} 
