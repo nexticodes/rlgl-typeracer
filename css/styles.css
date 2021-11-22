@@ -161,3 +161,11 @@ footer {
     justify-content: center;
     z-index: 5;
 }
+
+.valid {
+    color: #0fa;
+}
+
+.invalid {
+    color: #FE0300;
+}

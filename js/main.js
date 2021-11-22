@@ -35,6 +35,9 @@ const gameContainer = document.querySelector('game-container');
 const light = document.querySelector('light');
 // heart container.
 const heartContainer = document.querySelector('heart-container');
+
+// current word element. DYNAMIC.
+let currentWordEl;
 // start button.
 // const startButton = document.querySelector('');
 // rules button.
@@ -61,9 +64,10 @@ function init() {
     wordsSwitch = wordsArr.map( e => 0);
     hearts = [1, 1, 1, 1, 1];
     currWordIdx = 0;
-    isInputValid = true;
+    isInputValid = false;
     isPlayerConnected = false;
     renderWords();
+    updateQS();
 }
 init();
 
@@ -71,27 +75,46 @@ init();
 // Render functions
 // 1) Render function to render all of the words into screen.
 function renderWords() {
-    screenOutput.innerHTML = lorem;
-    console.log(wordsSwitch);
-    console.log(wordsArr[currWordIdx]);
+    let outputHTML = wordsToDisplay.reduce((htmlString, word, i) => {
+        htmlString += `<span id=w${i}>${word}</span> `;
+        return htmlString;
+    }, '')
+    screenOutput.innerHTML = outputHTML;
 };
 // 2) controller / render function based on if the user input is valid
 function inputController(e) {
     let playerInput = e.target.value;
-    if (wordsArr[currWordIdx].includes(playerInput)){
+    isInputValid = wordsArr[currWordIdx].includes(playerInput);
+    if (isInputValid){
         input.style.color = '#0fa';
+        console.log(currentWordEl)
+        currentWordEl.classList.remove('invalid');
         if (playerInput.includes(' ')){
             wordsSwitch[currWordIdx] = 1;
-            renderWords();
+            updateWordsOnScreen();
             input.value = '';
+            currentWordEl.classList.add('valid');
             currWordIdx++;
+            updateQS();
         }
     } else {
         input.style.color = '#FE0300';
+        currentWordEl.classList.add('invalid');
+        currentWordEl.classList.remove('valid');
         wordsSwitch[currWordIdx] = -1;
-        renderWords();
     }
 }
 // 3) render function for heart container, render hearts based on array.
 // 4) render function for light change
 // 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
+
+
+// update word on screen function based on wordsSwitch.
+function updateWordsOnScreen(){
+
+}
+
+// helper function for ease of typing.
+function updateQS(){
+    currentWordEl = document.querySelector(`#w${currWordIdx}`);
+}
