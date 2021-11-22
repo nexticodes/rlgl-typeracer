@@ -86,7 +86,6 @@ function init() {
     renderWords();
     updateQS();
 }
-init();
 
 
 // Render functions
@@ -190,7 +189,9 @@ function handleFocus(){
     inputEl.classList.toggle('blocked');
     if (inputEl.getAttribute('placeholder') === 'CONNECT'){
         inputEl.setAttribute('placeholder', '');
+        init();
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT' );
+        clearInterval(timerInterval);
     }
 }
