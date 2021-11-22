@@ -61,7 +61,9 @@ let currentWordEl;
 // --> input
 inputEl.addEventListener('input', inputController);
 // --> onFocus
+inputEl.addEventListener('focus', handleFocus);
 // --> unfocus
+inputEl.addEventListener('blur', handleFocus);
 // restart game button
 
 /*----- functions -----*/
@@ -100,8 +102,8 @@ function renderWords() {
 // render time.
 function startTimer(){
     timerInterval = setInterval(function() {
-        time--;
         timerEl.innerText = time;
+        time--;
     }, 1000)
 }
 
@@ -181,3 +183,14 @@ function lightHelper(color){
 function getRandomMS(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 } 
+
+// helper function that will handle focus.
+function handleFocus(){
+    isPlayerConnected = !isPlayerConnected;
+    inputEl.classList.toggle('blocked');
+    if (inputEl.getAttribute('placeholder') === 'CONNECT'){
+        inputEl.setAttribute('placeholder', '');
+    } else {
+        inputEl.setAttribute('placeholder', 'CONNECT' );
+    }
+}
