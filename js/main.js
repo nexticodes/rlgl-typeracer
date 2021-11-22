@@ -29,6 +29,8 @@ let lightColors;
 let lightIndex;
 // number of words completed.
 let numWordsCompleted;
+// timer interval.
+let timerInterval;
 
 /*----- cached element references -----*/
 // input element
@@ -41,6 +43,8 @@ const gameContainerEl = document.querySelector('game-container');
 const lightEl = document.querySelector('light');
 // heart container.
 const heartContainerEl = document.querySelector('heart-container');
+// timer element.
+const timerEl = document.querySelector('#timer');
 
 // current word element. DYNAMIC.
 let currentWordEl;
@@ -64,7 +68,7 @@ inputEl.addEventListener('input', inputController);
 // init function initialize all variables.
 function init() {
     // set timer.
-    timer = 60;
+    time = 60;
     wordsToDisplay = lorem.split(' ');
     wordsArr= wordsToDisplay.map(e => e + ' ');
     wordsSwitch = wordsArr.map( e => 0);
@@ -75,6 +79,7 @@ function init() {
     numWordsCompleted = 0;
     isInputValid = false;
     isPlayerConnected = false;
+    startTimer();
     renderLight();
     renderWords();
     updateQS();
@@ -91,7 +96,16 @@ function renderWords() {
     }, '')
     screenOutputEl.innerHTML = outputHTML;
 };
-// 2) controller / render function based on if the user input is valid
+
+// render time.
+function startTimer(){
+    timerInterval = setInterval(function() {
+        time--;
+        timerEl.innerText = time;
+    }, 1000)
+}
+
+// 3) controller / render function based on if the user input is valid
 function inputController(e) {
     let playerInput = e.target.value;
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
@@ -114,8 +128,8 @@ function inputController(e) {
         wordsSwitch[currWordIdx] = -1;
     }
 }
-// 3) render function for heart container, render hearts based on array.
-// 4) render function for light change
+// 4) render function for heart container, render hearts based on array.
+// 5) render function for light change
 function renderLight() {
     // green light for 4-8 seconds.
     // yellow light for 1 - 1.5 seconds.
@@ -125,7 +139,7 @@ function renderLight() {
     console.log(lightIndex);
     console.log('current light', lightColors[lightIndex]);
 }
-// 5) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
+// 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
 
 // update word on screen function based on wordsSwitch.
@@ -151,7 +165,7 @@ function lightHelper(color){
     } else if (color === 'green'){
         randomMS = getRandomMS(4000, 8000);
     }
-    let lightSwitchInterval = setInterval(() => {
+    let lightSwitchInterval = setInterval(function(){
         // green or yellow
         if (lightIndex === 0 || lightIndex === 1){ 
             // flip 
