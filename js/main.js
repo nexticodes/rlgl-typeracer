@@ -39,6 +39,8 @@ let randomLightSec;
 /*----- cached element references -----*/
 // input element
 const inputEl = document.querySelector('#user-input');
+// screen element.
+const screenEl = document.querySelector('#screen');
 // screen's p element.
 const screenOutputEl = document.querySelector('#screen-output');
 // game container (for changing color.)
@@ -159,6 +161,9 @@ function inputController(e) {
     }
 }
 // 4) render function for heart container, render hearts based on array.
+function renderHearts(){
+
+}
 // 5) render function for light change
 function renderLight() {
     // green light for 4-8 seconds.
@@ -212,6 +217,7 @@ function handleFocus() {
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
         inputEl.setAttribute('placeholder', '');
         init();
+        power();
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
         clearInterval(timerInterval);
@@ -220,6 +226,15 @@ function handleFocus() {
 
 
 // Power up function that will apply all styles signifying power up.
-function powerUp(){
-
+function power(){
+    screenEl.classList.add('.active');
+    gameContainerEl.classList.add('.neon-valid');
+    let hIdx = 0;
+    const heartFillInterval = setInterval(function(){
+        if (hIdx === 4){
+            clearInterval(heartFillInterval);
+        }
+        document.querySelector(`#h${hIdx}`).classList.replace('none', 'full');
+        hIdx++;
+    }, 500);
 }
