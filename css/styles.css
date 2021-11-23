@@ -151,6 +151,19 @@ input:hover{
 }
 
 @keyframes inputhover {
+    0% {
+        box-shadow:
+        /* White glow */
+        0 0 2px #fff,
+        0 0 3px #fff,
+        0 0 8px #fff,
+        /* Green glow */
+        0 0 1px rgb(0, 153, 255),
+        0 0 2px rgb(0, 153, 255),
+        0 0 4px rgb(0, 153, 255),
+        0 0 8px rgb(0, 153, 255),
+        0 0 10px rgb(0, 153, 255)
+    }
     40% {
         box-shadow:
         /* White glow */
