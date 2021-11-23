@@ -158,11 +158,8 @@ function inputController(e) {
             wordsSwitch[currWordIdx] = -1;
         }
     } else {
-        let numLives = hearts.reduce((a, c) => {
-            a += c;
-            return a;
-        }, 0);
-        hearts[numLives - 1] = 0;
+        gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
+        takeDamage();
         renderHearts();
     };
 };
@@ -286,12 +283,28 @@ function startCountdownToGame() {
     let cdInterval = setInterval(function () {
         countdownToGame--;
         countdownEl.innerText = countdownToGame;
-        if (countdownToGame < 1) {
+        if (countdownToGame === 0) {
             document.querySelector('#ready').innerText = '';
             countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
-        } else if (countdownToGame === 0) {
-            screenEl = '';
+        } else if (countdownToGame < 0) {
             clearInterval(cdInterval);
         }
     }, 1000);
+}
+
+function takeDamage(){
+    let blinkTimer = 0;
+    let blink = setInterval(function(){
+        if (blinkTimer === 4){
+            gameContainerEl.classList.toggle('neon-invalid');
+            clearInterval(blink);
+        };
+        blinkTimer++;
+        gameContainerEl.classList.toggle('neon-invalid');
+    }, 250);
+    let numLives = hearts.reduce((a, c) => {
+        a += c;
+        return a;
+    }, 0);
+    hearts[numLives - 1] = 0;
 }
