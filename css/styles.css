@@ -30,7 +30,8 @@ body {
     margin: auto;
     padding: 2rem 5rem;
     overflow-y: scroll;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+    scroll-padding-top: 50rem;
     z-index: 5;
 }
 
@@ -54,6 +55,7 @@ body {
 .current {
     animation: enlargefont 0.5s infinite;
     font-size: 1.18rem;
+    color:rgb(0, 153, 255);
 }
 
 @keyframes enlargefont {

@@ -160,6 +160,13 @@ function inputController(e) {
     };
 };
 
+// helper function for ease of typing.
+function updateCurrentWord() {
+    currentWordEl = document.querySelector(`#w${currWordIdx}`);
+    currentWordEl.classList.add('current');
+    currentWordEl.scrollIntoView();
+};
+
 // 4) render function for heart container, render hearts based on array.
 function renderHearts() {
     hearts.forEach((h, i) => {
@@ -180,12 +187,12 @@ function renderLight() {
     lightEl.classList.add(currColor.color);
 };
 // 6) FUN: render function for when user types while light is red. changes green neon to red. maybe activate static effect.
-function renderDamageTaken(){
+function renderDamageTaken() {
     gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
     let blinkTimer = 0;
     let shakeTimer = 0;
-    let damageInterval = setInterval(function(){
-        if (blinkTimer === 4 && shakeTimer === 1000){
+    let damageInterval = setInterval(function () {
+        if (blinkTimer === 4 && shakeTimer === 1000) {
             gameContainerEl.classList.toggle('neon-invalid');
             screenEl.classList.toggle('shake');
             clearInterval(damageInterval);
@@ -198,15 +205,6 @@ function renderDamageTaken(){
     }, 250);
     renderHearts();
 }
-
-// helper function for ease of typing.
-function updateCurrentWord() {
-    currentWordEl = document.querySelector(`#w${currWordIdx}`);
-    currentWordEl.classList.add('current');
-    if (numWordsCompleted >= 20){
-        currentWordEl.scrollIntoView();
-    }
-};
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
@@ -305,7 +303,7 @@ function startCountdownToGame() {
     }, 1000);
 }
 
-function takeDamage(){
+function takeDamage() {
     let numLives = hearts.reduce((a, c) => {
         a += c;
         return a;
