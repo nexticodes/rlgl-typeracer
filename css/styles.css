@@ -47,8 +47,12 @@ body {
 #screen > p {
     color: white;
     text-align: center;
-    font-size: 1.2rem;
-    line-height: 2rem;
+    font-size: 1.0rem;
+    line-height: 2.5rem;
+}
+
+.current {
+    font-size: 1.5rem;
 }
 
 .timer-container, .light-container, .input-heart-container {

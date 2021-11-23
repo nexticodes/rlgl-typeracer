@@ -104,7 +104,6 @@ function init() {
     renderLight();
     renderWords();
     renderHearts();
-    updateQS();
 };
 
 
@@ -116,6 +115,7 @@ function renderWords() {
         return htmlString;
     }, '')
     screenOutputEl.innerHTML = outputHTML;
+    updateQS();
 };
 
 // render time.
@@ -144,8 +144,8 @@ function inputController(e) {
             gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
             if (playerInput.includes(' ')) {
                 wordsSwitch[currWordIdx] = 1;
-                updateWordsOnScreen();
                 inputEl.value = '';
+                currentWordEl.classList.remove('current');
                 currentWordEl.classList.add('valid');
                 currWordIdx++;
                 numWordsCompleted++;
@@ -185,14 +185,10 @@ function renderLight() {
 // 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
 
-// update word on screen function based on wordsSwitch.
-function updateWordsOnScreen() {
-
-};
-
 // helper function for ease of typing.
 function updateQS() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
+    currentWordEl.classList.add('current');
 };
 
 // Helper function that checks on timePassed global variable.
