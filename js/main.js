@@ -1,9 +1,6 @@
 // DELETE LATER
 let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.';
 
-
-
-
 /*----- constants -----*/
 // Maybe word Class
 
@@ -108,7 +105,7 @@ function init() {
     renderWords();
     renderHearts();
     updateQS();
-}
+};
 
 
 // Render functions
@@ -134,13 +131,13 @@ function startTimer() {
             clearInterval(timerInterval);
         }
     }, 1000);
-}
+};
 
 // 3) controller / render function based on if the user input is valid
 function inputController(e) {
     let playerInput = e.target.value;
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
-    if (currColor.color !== 'red'){
+    if (currColor.color !== 'red') {
         if (isInputValid) {
             inputEl.style.color = '#0fa';
             currentWordEl.classList.remove('invalid');
@@ -157,8 +154,7 @@ function inputController(e) {
         } else {
             gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
             inputEl.style.color = '#FE0300';
-            currentWordEl.classList.add('invalid');
-            currentWordEl.classList.remove('valid');
+            currentWordEl.classList.replace('valid', 'invalid');
             wordsSwitch[currWordIdx] = -1;
         }
     } else {
@@ -171,8 +167,8 @@ function inputController(e) {
     };
 };
 // 4) render function for heart container, render hearts based on array.
-function renderHearts(){
-    hearts.forEach((h,i) => {
+function renderHearts() {
+    hearts.forEach((h, i) => {
         let heart = document.querySelector(`#h${i}`);
         if (h) {
             heart.classList.replace('none', 'full');
@@ -180,7 +176,7 @@ function renderHearts(){
             heart.classList.replace('full', 'none');
         };
     });
-}
+};
 // 5) render function for light change
 function renderLight() {
     // green light for 4-8 seconds.
@@ -188,19 +184,19 @@ function renderLight() {
     // set red light between 3-6 seconds.
     lightEl.classList.remove('red', 'yellow', 'green', 'white', 'blue');
     lightEl.classList.add(currColor.color);
-}
+};
 // 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
 
 
 // update word on screen function based on wordsSwitch.
 function updateWordsOnScreen() {
 
-}
+};
 
 // helper function for ease of typing.
 function updateQS() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
-}
+};
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
@@ -208,7 +204,7 @@ function updateQS() {
 function lightHelper() {
     // if light is green and timePassed is equal to random switch time.
     if (randomLightSec === timePassed) {
-        if (lightIndex === 0 || lightIndex === 1){
+        if (lightIndex === 0 || lightIndex === 1) {
             lightIndex++;
         } else {
             lightIndex = 0;
@@ -220,23 +216,23 @@ function lightHelper() {
         timePassed = 0;
     }
     renderLight();
-}
+};
 
 // helper function get random between two values based on color;
 function getRandomSec(color) {
     return Math.floor(Math.random() * (color.timeMax - color.timeMin) + color.timeMin);
-}
+};
 
 // helper function that will handle focus.
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
-        // setTimeout(function(){
+        setTimeout(function () {
             init();
-            // gameContainerEl.classList.replace('neon-loading', 'neon-valid')
-        // }, 6000);
-        // power();
+            gameContainerEl.classList.replace('neon-loading', 'neon-valid');
+        }, 6000);
+        power();
         inputEl.setAttribute('placeholder', '');
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
@@ -248,7 +244,7 @@ function handleFocus() {
 
 
 // Power up function that will apply all styles signifying power up.
-function power(){
+function power() {
     screenEl.classList.add('active');
     gameContainerEl.classList.add('neon-loading');
     flickerGoLight();
@@ -256,11 +252,10 @@ function power(){
     startCountdownToGame();
 }
 
-
-function fillHearts(){
+function fillHearts() {
     let hIdx = 0;
-    const heartFillInterval = setInterval(function(){
-        if (hIdx === 4){
+    const heartFillInterval = setInterval(function () {
+        if (hIdx === 4) {
             clearInterval(heartFillInterval);
         }
         document.querySelector(`#h${hIdx}`).classList.replace('none', 'full');
@@ -268,11 +263,12 @@ function fillHearts(){
     }, 500);
 }
 
-function flickerGoLight(){
+
+function flickerGoLight() {
     let increment = 0;
     lightEl.classList.add('white');
-    const lightFlickInterval = setInterval(function(){
-        if (increment == 10){
+    const lightFlickInterval = setInterval(function () {
+        if (increment >= 10) {
             lightEl.classList.remove('blue');
             lightEl.classList.remove('white');
             clearInterval(lightFlickInterval);
@@ -283,14 +279,14 @@ function flickerGoLight(){
     }, 250);
 }
 
-function startCountdownToGame(){
+function startCountdownToGame() {
     countdownToGame = 5;
     screenOutputEl.innerHTML = `<h3 id="ready">GET READY!</h3> <h1 id="countdown">${(countdownToGame)}</h1>`;
     let countdownEl = document.querySelector('#countdown');
-    let cdInterval = setInterval(function(){
+    let cdInterval = setInterval(function () {
         countdownToGame--;
         countdownEl.innerText = countdownToGame;
-        if (countdownToGame < 1){
+        if (countdownToGame < 1) {
             document.querySelector('#ready').innerText = '';
             countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
         } else if (countdownToGame === 0) {
