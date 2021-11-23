@@ -11,7 +11,7 @@ let timer;
 let wordsArr;
 // array representation of the words need to be typed.
 // [0,0,0,0,0] = array of 5 words, 0 meaning not completed yet. -1 wrong, 1 completed.
-let wordsSwitch;
+// let wordsSwitch;
 // Is the input valid.
 let isInputValid;
 // currentWord being validated.
@@ -73,7 +73,6 @@ function init() {
     time = 0;
     wordsToDisplay = lorem.split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
-    wordsSwitch = wordsArr.map(e => 0);
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
         {
@@ -115,7 +114,7 @@ function renderWords() {
         return htmlString;
     }, '')
     screenOutputEl.innerHTML = outputHTML;
-    updateQS();
+    updateCurrentWord();
 };
 
 // render time.
@@ -143,19 +142,17 @@ function inputController(e) {
             currentWordEl.classList.remove('invalid');
             gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
             if (playerInput.includes(' ')) {
-                wordsSwitch[currWordIdx] = 1;
                 inputEl.value = '';
                 currentWordEl.classList.remove('current');
                 currentWordEl.classList.add('valid');
                 currWordIdx++;
                 numWordsCompleted++;
-                updateQS();
+                updateCurrentWord();
             }
         } else {
             gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
             inputEl.style.color = '#FE0300';
             currentWordEl.classList.replace('valid', 'invalid');
-            wordsSwitch[currWordIdx] = -1;
         }
     } else {
         takeDamage();
@@ -203,9 +200,12 @@ function renderDamageTaken(){
 }
 
 // helper function for ease of typing.
-function updateQS() {
+function updateCurrentWord() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
     currentWordEl.classList.add('current');
+    if (numWordsCompleted >= 20){
+        currentWordEl.scrollIntoView();
+    }
 };
 
 // Helper function that checks on timePassed global variable.
