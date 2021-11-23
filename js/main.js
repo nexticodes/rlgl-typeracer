@@ -261,7 +261,7 @@ function flickerGoLight() {
     let increment = 0;
     lightEl.classList.add('white');
     const lightFlickInterval = setInterval(function () {
-        if (increment >= 10) {
+        if (increment >= 16) {
             lightEl.classList.remove('blue');
             lightEl.classList.remove('white');
             clearInterval(lightFlickInterval);
