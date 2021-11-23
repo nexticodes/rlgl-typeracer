@@ -158,9 +158,8 @@ function inputController(e) {
             wordsSwitch[currWordIdx] = -1;
         }
     } else {
-        gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
         takeDamage();
-        renderHearts();
+        renderDamageTaken();
     };
 };
 // 4) render function for heart container, render hearts based on array.
@@ -182,8 +181,25 @@ function renderLight() {
     lightEl.classList.remove('red', 'yellow', 'green', 'white', 'blue');
     lightEl.classList.add(currColor.color);
 };
-// 6) FUN: render function for when user types while light is red. changes green neon to red and show creepy skin. maybe activate static effect.
+// 6) FUN: render function for when user types while light is red. changes green neon to red. maybe activate static effect.
+function renderDamageTaken(){
+    gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
+    let blinkTimer = 0;
+    let shakeTimer = 0;
+    let damageInterval = setInterval(function(){
+        if (blinkTimer === 4 && shakeTimer === 1000){
+            gameContainerEl.classList.toggle('neon-invalid');
+            screenEl.classList.toggle('shake');
+            clearInterval(damageInterval);
+        };
+        blinkTimer++;
+        shakeTimer += 250;
+        screenEl.classList.toggle('shake');
+        gameContainerEl.classList.toggle('neon-invalid');
 
+    }, 250);
+    renderHearts();
+}
 
 // helper function for ease of typing.
 function updateQS() {
@@ -289,15 +305,6 @@ function startCountdownToGame() {
 }
 
 function takeDamage(){
-    let blinkTimer = 0;
-    let blink = setInterval(function(){
-        if (blinkTimer === 4){
-            gameContainerEl.classList.toggle('neon-invalid');
-            clearInterval(blink);
-        };
-        blinkTimer++;
-        gameContainerEl.classList.toggle('neon-invalid');
-    }, 250);
     let numLives = hearts.reduce((a, c) => {
         a += c;
         return a;

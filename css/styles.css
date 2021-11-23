@@ -31,6 +31,7 @@ body {
     padding: 2rem 5rem;
     overflow-y: scroll;
     scroll-behavior: smooth;
+    z-index: 5;
 }
 
 #countdown {
@@ -382,4 +383,31 @@ footer {
     align-items: center;
     justify-content: center;
     z-index: 5;
+}
+
+.shake {
+    animation: shake 0.5s infinite;
+    transform: translateX(0rem);
+
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0rem);
+    }
+    20% {
+        transform: translateX(-.1rem);
+    }
+    40% {
+        tranform: translateX(.1rem);
+    }
+    60% {
+        transform: translateX(-.1rem);
+    }
+    80% {
+        transform: translateX(.1rem);
+    } 
+    100% {
+        transform: translateX(0rem);
+    }
 }
