@@ -47,12 +47,21 @@ body {
 #screen > p {
     color: white;
     text-align: center;
-    font-size: 1.0rem;
     line-height: 2.5rem;
 }
 
 .current {
-    font-size: 1.5rem;
+    animation: enlargefont 0.5s infinite;
+    font-size: 1.18rem;
+}
+
+@keyframes enlargefont {
+    50% {
+        font-size: 1.2rem;
+    }
+    100% {
+        font-size: 1.18rem;
+    }
 }
 
 .timer-container, .light-container, .input-heart-container {
@@ -146,8 +155,6 @@ input {
 input:hover{
     animation: inputhover 1s forwards;
     cursor: pointer;
-
-
 }
 
 @keyframes inputhover {
