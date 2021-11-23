@@ -31,6 +31,7 @@ body {
     padding: 2rem 5rem;
     overflow-y: scroll;
     scroll-behavior: smooth;
+    z-index: 5;
 }
 
 #countdown {
@@ -47,12 +48,21 @@ body {
 #screen > p {
     color: white;
     text-align: center;
-    font-size: 1.0rem;
     line-height: 2.5rem;
 }
 
 .current {
-    font-size: 1.5rem;
+    animation: enlargefont 0.5s infinite;
+    font-size: 1.18rem;
+}
+
+@keyframes enlargefont {
+    50% {
+        font-size: 1.2rem;
+    }
+    100% {
+        font-size: 1.18rem;
+    }
 }
 
 .timer-container, .light-container, .input-heart-container {
@@ -146,8 +156,6 @@ input {
 input:hover{
     animation: inputhover 1s forwards;
     cursor: pointer;
-
-
 }
 
 @keyframes inputhover {
@@ -375,4 +383,31 @@ footer {
     align-items: center;
     justify-content: center;
     z-index: 5;
+}
+
+.shake {
+    animation: shake 0.5s infinite;
+    transform: translateX(0rem);
+
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0rem);
+    }
+    20% {
+        transform: translateX(-.1rem);
+    }
+    40% {
+        tranform: translateX(.1rem);
+    }
+    60% {
+        transform: translateX(-.1rem);
+    }
+    80% {
+        transform: translateX(.1rem);
+    } 
+    100% {
+        transform: translateX(0rem);
+    }
 }
