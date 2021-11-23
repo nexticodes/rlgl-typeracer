@@ -1,5 +1,5 @@
 // DELETE LATER
-let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis.'
+let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.';
 
 
 
@@ -47,8 +47,6 @@ const screenOutputEl = document.querySelector('#screen-output');
 const gameContainerEl = document.querySelector('.game-container');
 // light (for changing color);
 const lightEl = document.querySelector('.light');
-// heart container.
-const heartContainerEl = document.querySelector('.heart-container');
 // timer element.
 const timerEl = document.querySelector('#timer');
 
@@ -108,6 +106,7 @@ function init() {
     startTimer();
     renderLight();
     renderWords();
+    renderHearts();
     updateQS();
 }
 
@@ -141,32 +140,44 @@ function startTimer() {
 function inputController(e) {
     let playerInput = e.target.value;
     isInputValid = wordsArr[currWordIdx].includes(playerInput);
-    if (isInputValid) {
-        inputEl.style.color = '#0fa';
-        currentWordEl.classList.remove('invalid');
-        gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
-        if (playerInput.includes(' ')) {
-            wordsSwitch[currWordIdx] = 1;
-            updateWordsOnScreen();
-            inputEl.value = '';
-            currentWordEl.classList.add('valid');
-            currWordIdx++;
-            numWordsCompleted++;
-            updateQS();
+    if (currColor.color !== 'red'){
+        if (isInputValid) {
+            inputEl.style.color = '#0fa';
+            currentWordEl.classList.remove('invalid');
+            gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
+            if (playerInput.includes(' ')) {
+                wordsSwitch[currWordIdx] = 1;
+                updateWordsOnScreen();
+                inputEl.value = '';
+                currentWordEl.classList.add('valid');
+                currWordIdx++;
+                numWordsCompleted++;
+                updateQS();
+            }
+        } else {
+            gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
+            inputEl.style.color = '#FE0300';
+            currentWordEl.classList.add('invalid');
+            currentWordEl.classList.remove('valid');
+            wordsSwitch[currWordIdx] = -1;
         }
     } else {
-        gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
-        inputEl.style.color = '#FE0300';
-        currentWordEl.classList.add('invalid');
-        currentWordEl.classList.remove('valid');
-        wordsSwitch[currWordIdx] = -1;
-    }
-}
+        let numLives = hearts.reduce((a, c) => {
+            a += c;
+            return a;
+        }, 0);
+        hearts[numLives - 1] = 0;
+        renderHearts();
+    };
+};
 // 4) render function for heart container, render hearts based on array.
 function renderHearts(){
-    hearts.forEach( (h,i) => {
-        if (!h) {
-            document.querySelector(`#h${i}`).replace('full', 'none');
+    hearts.forEach((h,i) => {
+        let heart = document.querySelector(`#h${i}`);
+        if (h) {
+            heart.classList.replace('none', 'full');
+        } else {
+            heart.classList.replace('full', 'none');
         };
     });
 }
@@ -221,11 +232,11 @@ function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
-        setTimeout(function(){
+        // setTimeout(function(){
             init();
-            gameContainerEl.classList.replace('neon-loading', 'neon-valid')
-        }, 6000);
-        power();
+            // gameContainerEl.classList.replace('neon-loading', 'neon-valid')
+        // }, 6000);
+        // power();
         inputEl.setAttribute('placeholder', '');
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');

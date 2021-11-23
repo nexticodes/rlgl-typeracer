@@ -29,6 +29,8 @@ body {
     width: 60rem;
     margin: auto;
     padding: 2rem 5rem;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 #countdown {
@@ -45,7 +47,8 @@ body {
 #screen > p {
     color: white;
     text-align: center;
-    font-size: 1.7rem;
+    font-size: 1.2rem;
+    line-height: 2rem;
 }
 
 .timer-container, .light-container, .input-heart-container {
