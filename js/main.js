@@ -162,6 +162,7 @@ function inputController(e) {
         renderDamageTaken();
     };
 };
+
 // 4) render function for heart container, render hearts based on array.
 function renderHearts() {
     hearts.forEach((h, i) => {
