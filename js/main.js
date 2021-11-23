@@ -302,5 +302,5 @@ function takeDamage(){
         a += c;
         return a;
     }, 0);
-    hearts[numLives - 1] = 0;
+    if (numLives !== 0) hearts[numLives - 1] = 0;
 }
