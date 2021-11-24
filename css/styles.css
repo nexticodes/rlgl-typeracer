@@ -25,8 +25,8 @@ body {
     background-color: black;
     justify-self: center;
     align-self: center;
-    height: 25rem;
-    width: 60rem;
+    height: 60%;
+    width: 80%;
     margin: auto;
     padding: 2rem 5rem;
     overflow-y: scroll;
