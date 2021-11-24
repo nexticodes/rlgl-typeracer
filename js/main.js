@@ -1,5 +1,8 @@
 // DELETE LATER
-let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.';
+let mock = `I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It’s when you know you’re licked before you begin, but you begin anyway and see it through no matter what.`;
+let harry = `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all; the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`
+let kurt = `Hello babies. Welcome to Earth. It’s hot in the summer and cold in the winter. It’s round and wet and crowded. On the outside, babies, you’ve got a hundred years here. There’s only one rule that I know of, babies: “God damn it, you’ve got to be kind.”`
+let crucible = `Because it is my name! Because I cannot have another in my life! Because I lie and sign myself to lies! Because I am not worth the dust on the feet of them that hang! How may I live without my name? I have given you my soul; leave me my name!`
 
 /*----- constants -----*/
 // Maybe word Class
@@ -11,7 +14,7 @@ let timer;
 let wordsArr;
 // array representation of the words need to be typed.
 // [0,0,0,0,0] = array of 5 words, 0 meaning not completed yet. -1 wrong, 1 completed.
-let wordsSwitch;
+// let wordsSwitch;
 // Is the input valid.
 let isInputValid;
 // currentWord being validated.
@@ -71,9 +74,8 @@ inputEl.addEventListener('focusout', handleFocus);
 // init function initialize all variables.
 function init() {
     time = 0;
-    wordsToDisplay = lorem.split(' ');
+    wordsToDisplay = harry.split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
-    wordsSwitch = wordsArr.map(e => 0);
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
         {
@@ -115,7 +117,7 @@ function renderWords() {
         return htmlString;
     }, '')
     screenOutputEl.innerHTML = outputHTML;
-    updateQS();
+    updateCurrentWord();
 };
 
 // render time.
@@ -143,24 +145,29 @@ function inputController(e) {
             currentWordEl.classList.remove('invalid');
             gameContainerEl.classList.replace('neon-invalid', 'neon-valid');
             if (playerInput.includes(' ')) {
-                wordsSwitch[currWordIdx] = 1;
                 inputEl.value = '';
                 currentWordEl.classList.remove('current');
                 currentWordEl.classList.add('valid');
                 currWordIdx++;
                 numWordsCompleted++;
-                updateQS();
+                updateCurrentWord();
             }
         } else {
             gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
             inputEl.style.color = '#FE0300';
             currentWordEl.classList.replace('valid', 'invalid');
-            wordsSwitch[currWordIdx] = -1;
         }
     } else {
         takeDamage();
         renderDamageTaken();
     };
+};
+
+// helper function for ease of typing.
+function updateCurrentWord() {
+    currentWordEl = document.querySelector(`#w${currWordIdx}`);
+    currentWordEl.classList.add('current');
+    currentWordEl.scrollIntoView();
 };
 
 // 4) render function for heart container, render hearts based on array.
@@ -183,12 +190,12 @@ function renderLight() {
     lightEl.classList.add(currColor.color);
 };
 // 6) FUN: render function for when user types while light is red. changes green neon to red. maybe activate static effect.
-function renderDamageTaken(){
+function renderDamageTaken() {
     gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
     let blinkTimer = 0;
     let shakeTimer = 0;
-    let damageInterval = setInterval(function(){
-        if (blinkTimer === 4 && shakeTimer === 1000){
+    let damageInterval = setInterval(function () {
+        if (blinkTimer === 4 && shakeTimer === 1000) {
             gameContainerEl.classList.toggle('neon-invalid');
             screenEl.classList.toggle('shake');
             clearInterval(damageInterval);
@@ -201,12 +208,6 @@ function renderDamageTaken(){
     }, 250);
     renderHearts();
 }
-
-// helper function for ease of typing.
-function updateQS() {
-    currentWordEl = document.querySelector(`#w${currWordIdx}`);
-    currentWordEl.classList.add('current');
-};
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
@@ -305,7 +306,7 @@ function startCountdownToGame() {
     }, 1000);
 }
 
-function takeDamage(){
+function takeDamage() {
     let numLives = hearts.reduce((a, c) => {
         a += c;
         return a;
