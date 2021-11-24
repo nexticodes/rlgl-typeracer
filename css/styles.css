@@ -37,7 +37,7 @@ body {
 
 #countdown {
     font-size: 78px;
-    margin-top: 5rem;
+    margin: 3rem auto;
 }
 
 
@@ -50,6 +50,7 @@ body {
     color: white;
     text-align: center;
     line-height: 2.5rem;
+    padding-top: 3rem;
 }
 
 .current {

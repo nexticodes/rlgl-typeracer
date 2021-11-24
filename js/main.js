@@ -1,5 +1,6 @@
 // DELETE LATER
-let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet consectetur adipisicing elit.';
+let lorem = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus fuga veniam quam nemo, eveniet odit quaerat ea dolor maxime voluptates quasi eligendi aliquid dolorum hic incidunt alias dolore architecto officiis. Lorem, ipsum dolor sit amet consectetur adipisicing elit.';
+let harry = `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all — the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`
 
 /*----- constants -----*/
 // Maybe word Class
@@ -71,7 +72,7 @@ inputEl.addEventListener('focusout', handleFocus);
 // init function initialize all variables.
 function init() {
     time = 0;
-    wordsToDisplay = lorem.split(' ');
+    wordsToDisplay = harry.split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
