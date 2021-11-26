@@ -35,6 +35,8 @@ let timerInterval;
 let timePassed;
 // randomLightSec that will hold value representing secs light will display.
 let randomLightSec;
+// current words per minute
+let currWPM;
 
 /*----- cached element references -----*/
 // input element
@@ -74,6 +76,7 @@ inputEl.addEventListener('focusout', handleFocus);
 // init function initialize all variables.
 function init() {
     time = 0;
+    currWPM = 0;
     wordsToDisplay = harry.split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
@@ -137,9 +140,9 @@ function startTimer() {
 
 // 3) controller / render function based on if the user input is valid
 function inputController(e) {
-    let playerInput = e.target.value;
-    isInputValid = wordsArr[currWordIdx].includes(playerInput);
     if (currColor.color !== 'red') {
+        let playerInput = e.target.value;
+        isInputValid = wordsArr[currWordIdx].includes(playerInput);
         if (isInputValid) {
             inputEl.style.color = '#0fa';
             currentWordEl.classList.remove('invalid');
@@ -148,8 +151,7 @@ function inputController(e) {
                 inputEl.value = '';
                 currentWordEl.classList.remove('current');
                 currentWordEl.classList.add('valid');
-                currWordIdx++;
-                numWordsCompleted++;
+                updatePoints();
                 updateCurrentWord();
             }
         } else {
@@ -158,6 +160,7 @@ function inputController(e) {
             currentWordEl.classList.replace('valid', 'invalid');
         }
     } else {
+        inputEl.value = '';
         takeDamage();
         renderDamageTaken();
     };
@@ -311,5 +314,19 @@ function takeDamage() {
         a += c;
         return a;
     }, 0);
-    if (numLives !== 0) hearts[numLives - 1] = 0;
+    if (numLives !== 0) {
+        hearts[numLives - 1] = 0;
+    } else {
+        endGame();
+    }
+}
+
+function updatePoints(){
+    currWordIdx++;
+    numWordsCompleted++;
+}
+
+// End game function will:
+function endGame(){
+
 }
