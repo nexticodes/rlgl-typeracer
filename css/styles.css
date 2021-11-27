@@ -395,7 +395,6 @@ footer {
 .shake {
     animation: shake 0.5s infinite;
     transform: translateX(0rem);
-
 }
 
 @keyframes shake {
@@ -417,4 +416,8 @@ footer {
     100% {
         transform: translateX(0rem);
     }
+}
+
+#score {
+    font-size: 4rem;
 }
