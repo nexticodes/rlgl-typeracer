@@ -287,7 +287,7 @@ input:hover{
 }
 
 .neon-loading {
-    animation: loadlight 7s forwards;
+    animation: loadlight 6s forwards;
 }
 
 .neon-unload {
@@ -311,7 +311,7 @@ input:hover{
 }
 
 @keyframes loadlight {
-    80% { 
+    85% { 
         box-shadow:
         /* White glow */
         0 0 3px #fff,

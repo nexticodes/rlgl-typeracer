@@ -1,6 +1,10 @@
 /*----- constants -----*/
 // Maybe word Class
-let articles = [];
+const articles = [`I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It's when you know you're licked before you begin, but you begin anyway and see it through no matter what.`,
+    `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all; the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`,
+    `Hello babies. Welcome to Earth. It's hot in the summer and cold in the winter. It's round and wet and crowded. On the outside, babies, you've got a hundred years here. There's only one rule that I know of, babies: "God damn it, you've got to be kind."`,
+    `Because it is my name! Because I cannot have another in my life! Because I lie and sign myself to lies! Because I am not worth the dust on the feet of them that hang! How may I live without my name? I have given you my soul; leave me my name!`];
+
 
 /*----- app's state (variables) -----*/
 // Timer
@@ -12,6 +16,8 @@ let wordsArr;
 // let wordsSwitch;
 // Is the input valid.
 let isInputValid;
+// is game active;
+let isGameActive;
 // currentWord being validated.
 let currWordIdx;
 // heart array [1, 1, 1, 1, 0] 4 HP left.
@@ -32,6 +38,8 @@ let timePassed;
 let randomLightSec;
 // current words per minute
 let currWPM;
+// intervals
+let intervals;
 
 /*----- cached element references -----*/
 // input element
@@ -72,18 +80,14 @@ inputEl.addEventListener('focusout', handleFocus);
 function init() {
     time = 0;
     currWPM = 0;
-    articles = [`I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It's when you know you're licked before you begin, but you begin anyway and see it through no matter what.`,
-    `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all; the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`,
-    `Hello babies. Welcome to Earth. It's hot in the summer and cold in the winter. It's round and wet and crowded. On the outside, babies, you've got a hundred years here. There's only one rule that I know of, babies: "God damn it, you've got to be kind."`,
-    `Because it is my name! Because I cannot have another in my life! Because I lie and sign myself to lies! Because I am not worth the dust on the feet of them that hang! How may I live without my name? I have given you my soul; leave me my name!`]
     wordsToDisplay = articles[Math.floor(Math.random(4))].split(' ');
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
         {
             color: 'green',
-            timeMin: 4,
-            timeMax: 8
+            timeMin: 3,
+            timeMax: 6
         },
         {
             color: 'yellow',
@@ -92,8 +96,8 @@ function init() {
         },
         {
             color: 'red',
-            timeMin: 3,
-            timeMax: 6
+            timeMin: 2,
+            timeMax: 5
         }
     ]
     lightIndex = 0;
@@ -103,11 +107,9 @@ function init() {
     numWordsCompleted = 0;
     isInputValid = false;
     isPlayerConnected = false;
+    isGameActive = false;
     timePassed = 0;
-    startTimer();
-    renderLight();
-    renderWords();
-    renderHearts();
+
 };
 
 
@@ -126,15 +128,18 @@ function renderWords() {
 function startTimer() {
     time = 60;
     timerEl.innerText = time;
-    timerInterval = setInterval(function () {
-        lightHelper();
+    let timerInterval = setInterval(function () {
+        if (countdownToGame <= 0) {
+            lightHelper();
+        }
         time--;
         timePassed++;
         timerEl.innerText = time;
-        if (time === 0) {
+        if (time <= 0) {
             clearInterval(timerInterval);
         }
     }, 1000);
+    intervals.push(timerInterval);
 };
 
 // 3) controller / render function based on if the user input is valid
@@ -241,23 +246,22 @@ function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('disconnected');
     if (inputEl.getAttribute('placeholder') === 'CONNECT') {
-        setTimeout(function () {
-            init();
-            gameContainerEl.classList.replace('neon-loading', 'neon-valid');
-        }, 6000);
+        init();
         power();
         inputEl.setAttribute('placeholder', '');
     } else {
         inputEl.setAttribute('placeholder', 'CONNECT');
         gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
+        isGameActive = false;
         clearTimeout();
-        clearInterval(timerInterval);
+        clearIntervals();
     }
 }
 
 
 // Power up function that will apply all styles signifying power up.
 function power() {
+    intervals = [];
     screenEl.classList.add('active');
     gameContainerEl.classList.add('neon-loading');
     flickerGoLight();
@@ -290,6 +294,7 @@ function flickerGoLight() {
         lightEl.classList.toggle('blue');
         increment++;
     }, 250);
+    intervals.push(lightFlickInterval);
 }
 
 function startCountdownToGame() {
@@ -302,10 +307,17 @@ function startCountdownToGame() {
         if (countdownToGame === 0) {
             document.querySelector('#ready').innerText = '';
             countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
-        } else if (countdownToGame < 0) {
+            isGameActive = true;
+        } else if (countdownToGame < 0){
+            startTimer();
+            renderLight();
+            renderWords();
+            renderHearts();
+            gameContainerEl.classList.replace('neon-loading', 'neon-valid');
             clearInterval(cdInterval);
         }
     }, 1000);
+    intervals.push(cdInterval);
 }
 
 function takeDamage() {
@@ -316,16 +328,29 @@ function takeDamage() {
     if (numLives !== 0) {
         hearts[numLives - 1] = 0;
     } else {
-        endGame();
+        renderEndGame('lose');
     }
 }
 
 function updatePoints() {
     currWordIdx++;
     numWordsCompleted++;
+    if (numWordsCompleted === wordsArr.length) {
+        renderEndGame('win');
+    }
 }
 
-// End game function will:
-function endGame() {
+// render end game function will:
+// should clear all intervals in the game. Ideally.
+// display how many words they have completed.
+function renderEndGame(cond) {
+    screenOutputEl.innerHTML = `<h2>YOU ${cond.toUpperCase()}!</h2> <h1>${numWordsCompleted}</h1><h6>is your wpm</h6>`;
+    // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
+    // Stop the timer
+    clearIntervals();
+}
 
+function clearIntervals() {
+    console.log('clearing');
+    intervals.forEach(i => clearInterval(i));
 }
