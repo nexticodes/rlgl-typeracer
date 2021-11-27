@@ -135,6 +135,7 @@ function startTimer() {
         timePassed++;
         timerEl.innerText = time;
         if (time <= 0) {
+            renderEndGame('lost')
             clearInterval(timerInterval);
         }
     }, 1000);
