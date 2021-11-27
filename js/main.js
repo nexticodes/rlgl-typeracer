@@ -109,7 +109,6 @@ function init() {
     isPlayerConnected = false;
     isGameActive = false;
     timePassed = 0;
-
 };
 
 
@@ -173,8 +172,10 @@ function inputController(e) {
 // helper function for ease of typing.
 function updateCurrentWord() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
-    currentWordEl.classList.add('current');
-    currentWordEl.scrollIntoView();
+    if (currentWordEl){
+        currentWordEl.classList.add('current');
+        currentWordEl.scrollIntoView();
+    }
 };
 
 // 4) render function for heart container, render hearts based on array.
@@ -308,7 +309,7 @@ function startCountdownToGame() {
             document.querySelector('#ready').innerText = '';
             countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
             isGameActive = true;
-        } else if (countdownToGame < 0){
+        } else if (countdownToGame < 0) {
             startTimer();
             renderLight();
             renderWords();
@@ -333,9 +334,9 @@ function takeDamage() {
 }
 
 function updatePoints() {
-    currWordIdx++;
     numWordsCompleted++;
-    if (numWordsCompleted === wordsArr.length) {
+    currWordIdx++;
+    if (numWordsCompleted === currWordIdx + 1) {
         renderEndGame('win');
     }
 }
@@ -344,13 +345,12 @@ function updatePoints() {
 // should clear all intervals in the game. Ideally.
 // display how many words they have completed.
 function renderEndGame(cond) {
-    screenOutputEl.innerHTML = `<h2>YOU ${cond.toUpperCase()}!</h2> <h1>${numWordsCompleted}</h1><h6>is your wpm</h6>`;
+    screenOutputEl.innerHTML = `<h2>YOU ${cond.toUpperCase()}!</h2> <h1 id="score">${numWordsCompleted}</h1><h6>is your wpm</h6>`;
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
 }
 
 function clearIntervals() {
-    console.log('clearing');
     intervals.forEach(i => clearInterval(i));
 }
