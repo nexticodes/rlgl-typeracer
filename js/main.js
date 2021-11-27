@@ -337,8 +337,8 @@ function takeDamage() {
 function updatePoints() {
     numWordsCompleted++;
     currWordIdx++;
-    // if (numWordsCompleted === currWordIdx + 1) {
-    if (numWordsCompleted === 1){ //testing
+    if (numWordsCompleted === currWordIdx + 1) {
+    // if (numWordsCompleted === 1){ //testing
         renderEndGame('won');
     }
 }
