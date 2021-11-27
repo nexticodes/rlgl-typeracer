@@ -326,9 +326,8 @@ function takeDamage() {
         a += c;
         return a;
     }, 0);
-    if (numLives !== 0) {
-        hearts[numLives - 1] = 0;
-    } else {
+    hearts[numLives - 1] = 0;
+    if ( numLives == 1 ){
         renderEndGame('lose');
     }
 }
