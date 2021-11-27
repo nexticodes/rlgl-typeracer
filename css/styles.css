@@ -28,16 +28,11 @@ body {
     height: 60%;
     width: 80%;
     margin: auto;
-    padding: 2rem 5rem;
+    padding: 2rem 7rem;
     overflow-y: scroll;
     scroll-behavior: auto;
     scroll-padding-top: 50rem;
     z-index: 5;
-}
-
-#countdown {
-    font-size: 78px;
-    margin: 3rem auto;
 }
 
 
@@ -50,7 +45,6 @@ body {
     color: white;
     text-align: center;
     line-height: 2.5rem;
-    padding-top: 3rem;
 }
 
 .current {
@@ -420,4 +414,17 @@ footer {
 
 #score {
     font-size: 4rem;
+}
+
+#ready {
+    margin-top: 3rem;
+    
+}
+.countdown {
+    font-size: 78px;
+    margin-top: 5rem;
+}
+
+#start {
+    margin-top: 9rem;
 }

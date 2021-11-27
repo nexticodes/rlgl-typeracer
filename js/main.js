@@ -143,7 +143,7 @@ function startTimer() {
 
 // 3) controller / render function based on if the user input is valid
 function inputController(e) {
-    if (currColor.color !== 'red') {
+    if (currColor.color !== 'red' && isGameActive) {
         let playerInput = e.target.value;
         isInputValid = wordsArr[currWordIdx].includes(playerInput);
         if (isInputValid) {
@@ -164,8 +164,10 @@ function inputController(e) {
         }
     } else {
         inputEl.value = '';
-        takeDamage();
-        renderDamageTaken();
+        if (isGameActive){
+            takeDamage();
+            renderDamageTaken();
+        }
     };
 };
 
@@ -300,14 +302,14 @@ function flickerGoLight() {
 
 function startCountdownToGame() {
     countdownToGame = 5;
-    screenOutputEl.innerHTML = `<h3 id="ready">GET READY!</h3> <h1 id="countdown">${(countdownToGame)}</h1>`;
-    let countdownEl = document.querySelector('#countdown');
+    screenOutputEl.innerHTML = `<h3 id="ready">GET READY!</h3> <h1 class="countdown">${(countdownToGame)}</h1>`;
+    let countdownEl = document.querySelector('.countdown');
     let cdInterval = setInterval(function () {
         countdownToGame--;
         countdownEl.innerText = countdownToGame;
         if (countdownToGame === 0) {
             document.querySelector('#ready').innerText = '';
-            countdownEl.innerHTML = '<h1 id="countdown">START</h1>';
+            countdownEl.innerHTML = '<h1 id="start" class="countdown">START</h1>';
             isGameActive = true;
         } else if (countdownToGame < 0) {
             startTimer();
@@ -328,15 +330,16 @@ function takeDamage() {
     }, 0);
     hearts[numLives - 1] = 0;
     if ( numLives == 1 ){
-        renderEndGame('lose');
+        renderEndGame('lost');
     }
 }
 
 function updatePoints() {
     numWordsCompleted++;
     currWordIdx++;
-    if (numWordsCompleted === currWordIdx + 1) {
-        renderEndGame('win');
+    // if (numWordsCompleted === currWordIdx + 1) {
+    if (numWordsCompleted === 1){ //testing
+        renderEndGame('won');
     }
 }
 
@@ -344,7 +347,15 @@ function updatePoints() {
 // should clear all intervals in the game. Ideally.
 // display how many words they have completed.
 function renderEndGame(cond) {
-    screenOutputEl.innerHTML = `<h2>YOU ${cond.toUpperCase()}!</h2> <h1 id="score">${numWordsCompleted}</h1><h6>is your wpm</h6>`;
+    isGameActive = false;
+    screenOutputEl.innerHTML = `
+        <div id="result-screen">
+            <h2>YOU ${cond.toUpperCase()}!</h2>
+                <h6>you typed </h6>
+                <h1 id="score">${numWordsCompleted}</h1>
+                <h6>words per minute!</h6>
+                <h3 id="replay">Play again?</h3>
+        </div>`;
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
