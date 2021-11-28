@@ -80,7 +80,8 @@ inputEl.addEventListener('focusout', handleFocus);
 function init() {
     time = 0;
     currWPM = 0;
-    wordsToDisplay = articles[Math.floor(Math.random(4))].split(' ');
+    wordsToDisplay = articles[Math.floor(Math.random() * 4)].split(' ');
+    // wordsToDisplay = articles[1].split(' '); // Testing
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
@@ -146,7 +147,7 @@ function startTimer() {
 function inputController(e) {
     if (currColor.color !== 'red' && isGameActive) {
         let playerInput = e.target.value;
-        isInputValid = wordsArr[currWordIdx].includes(playerInput);
+        isInputValid = wordsArr[currWordIdx].includes(playerInput) && wordsArr[currWordIdx][0] === playerInput[0];
         if (isInputValid) {
             inputEl.style.color = '#0fa';
             currentWordEl.classList.remove('invalid');
@@ -177,7 +178,9 @@ function updateCurrentWord() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
     if (currentWordEl){
         currentWordEl.classList.add('current');
-        currentWordEl.scrollIntoView();
+        if (numWordsCompleted >= 15){
+            screenEl.scrollTop = currentWordEl.offsetTop;
+        }
     }
 };
 
@@ -338,7 +341,8 @@ function takeDamage() {
 function updatePoints() {
     numWordsCompleted++;
     currWordIdx++;
-    if (numWordsCompleted === currWordIdx + 1) {
+    console.log(wordsArr.length);
+    if (numWordsCompleted === wordsArr.length + 1) {
     // if (numWordsCompleted === 1){ //testing
         renderEndGame('won');
     }
@@ -352,11 +356,13 @@ function renderEndGame(cond) {
     screenOutputEl.innerHTML = `
         <div id="result-screen">
             <h2>YOU ${cond.toUpperCase()}!</h2>
-                <h6>you typed </h6>
+                <h5>you typed </h5>
                 <h1 id="score">${numWordsCompleted}</h1>
-                <h6>words per minute!</h6>
-                <h3 id="replay">Play again?</h3>
-        </div>`;
+                <h5>words per minute!</h5>
+                </div>`;
+                // <h3 id="replay">Play again?</h3>
+                let scoreEl = document.querySelector('#score');
+    screenEl.scrollTop = scoreEl.offsetTop;
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
