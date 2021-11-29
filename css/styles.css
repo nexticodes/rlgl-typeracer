@@ -24,9 +24,9 @@ body {
     width: 100%;
     overflow: hidden;
     z-index: 50;
-    background: gray ;
+    background: black ;
     background-size: cover;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .modal {
@@ -42,6 +42,57 @@ body {
     background-color: black;
     border: 2px solid white;
     overflow-x: hidden;
+    box-shadow:
+    /* White glow */
+    0 0 18px #fff,
+    0 0 24px #fff,
+    0 0 32px #fff,
+    0 0 35px #fff,
+    0 0 42px #fff;
+    animation: menu 8s infinite;
+}
+
+@keyframes menu {
+    25% {
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px #FE0300,
+        0 0 24px #FE0300,
+        0 0 32px #FE0300,
+        0 0 35px #FE0300,
+        0 0 42px #FE0300 
+    }
+    50% { 
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px #0fa,
+        0 0 24px #0fa,
+        0 0 32px #0fa,
+        0 0 35px #0fa,
+        0 0 42px #0fa
+    }
+    
+    75%{
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px rgb(0, 153, 255),
+        0 0 24px rgb(0, 153, 255),
+        0 0 32px rgb(0, 153, 255),
+        0 0 35px rgb(0, 153, 255),
+        0 0 42px rgb(0, 153, 255) 
+    }
 }
 
 .modal-content h1 {
@@ -50,6 +101,27 @@ body {
 
 .modal-content h3 {
     margin: 20px;
+}
+
+.game-title {
+    font-size: 50px;
+    position: relative;
+    text-align: center;
+}
+
+small {
+    font-size: 12px
+}
+
+.button{
+    font-size: 24px;
+}
+
+.button:hover {
+    color: rgb(0, 153, 255);
+    text-shadow: 0px 0px 15px rgb(0, 153, 255);
+    animation: float 1s infinite;
+    cursor: pointer;
 }
 
 .text-blue {
