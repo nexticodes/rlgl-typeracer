@@ -44,6 +44,10 @@ body {
     overflow-x: hidden;
     box-shadow:
     /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* White glow */
     0 0 18px #fff,
     0 0 24px #fff,
     0 0 32px #fff,
