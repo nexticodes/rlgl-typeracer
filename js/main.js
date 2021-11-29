@@ -256,9 +256,9 @@ function handleFocus() {
     if (currentAttribute === 'CONNECT' || currentAttribute === 'PLAY AGAIN') {
         init();
         power();
-        inputEl.setAttribute('placeholder', '');
+        inputHelper('');
     } else {
-        inputEl.setAttribute('placeholder', 'CONNECT');
+        inputHelper('CONNECT');
         gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
         isGameActive = false;
         clearTimeout();
@@ -361,8 +361,7 @@ function renderEndGame(cond) {
                 </div>`;
     let scoreEl = document.querySelector('#score');
     screenEl.scrollTop = scoreEl.offsetTop;
-    inputEl.blur();
-    inputEl.setAttribute('placeholder', 'PLAY AGAIN');
+    inputHelper('PLAY AGAIN');
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
@@ -370,4 +369,13 @@ function renderEndGame(cond) {
 
 function clearIntervals() {
     intervals.forEach(i => clearInterval(i));
+}
+
+function inputHelper(ph) {
+    if (ph === 'PLAY AGAIN'){
+        inputEl.blur();
+        inputEl.setAttribute('placeholder', 'PLAY AGAIN');
+    } else {
+        inputEl.setAttribute('placeholder', ph);
+    }
 }
