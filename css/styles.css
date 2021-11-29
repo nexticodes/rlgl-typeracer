@@ -398,11 +398,13 @@ footer {
 }
 
 .shake {
-    animation: shake 0.5s infinite;
-    transform: translateX(0rem);
+    animation: shake 0.25s forwards;
 }
 
 @keyframes shake {
+    0% {
+        transform: translateX(0rem);
+    }
     20% {
         transform: translateX(-.2rem);
     }
@@ -416,7 +418,7 @@ footer {
         transform: translateX(0rem);
     } 
     100% {
-        transform: translateX(-0.2rem);
+        transform: translateX(-0.1rem);
     }
 }
 

@@ -205,18 +205,18 @@ function renderLight() {
 };
 // 6) FUN: render function for when user types while light is red. changes green neon to red. maybe activate static effect.
 function renderDamageTaken() {
+    screenEl.classList.add('shake');
     gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
     let blinkTimer = 0;
-    let shakeTimer = 0;
+    // let shakeTimer = 0;
     let damageInterval = setInterval(function () {
-        if (blinkTimer === 4 && shakeTimer === 1000) {
+        if (blinkTimer === 1) screenEl.classList.remove('shake');
+        if (blinkTimer === 4) {
             gameContainerEl.classList.toggle('neon-invalid');
-            screenEl.classList.toggle('shake');
             clearInterval(damageInterval);
         };
         blinkTimer++;
-        shakeTimer += 250;
-        screenEl.classList.toggle('shake');
+        // shakeTimer += 250;
         gameContainerEl.classList.toggle('neon-invalid');
 
     }, 250);
