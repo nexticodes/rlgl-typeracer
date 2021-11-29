@@ -18,16 +18,17 @@ body {
 
 .backdrop {
     position: absolute;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 120%;
+    top: 0;
+    left: 0;
+    height: 100%;
     width: 100%;
     overflow: hidden;
-    z-index: 99;
-    background: gray;
+    z-index: 50;
+    background: gray ;
     background-size: cover;
+    opacity: 0.8;
 }
+
 .modal {
     color: white;
     display: flex;
