@@ -341,9 +341,7 @@ function takeDamage() {
 function updatePoints() {
     numWordsCompleted++;
     currWordIdx++;
-    console.log(wordsArr.length);
     if (numWordsCompleted === wordsArr.length) {
-    // if (numWordsCompleted === 1){ //testing
         renderEndGame('won');
     }
 }
