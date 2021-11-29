@@ -252,7 +252,8 @@ function getRandomSec(color) {
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('disconnected');
-    if (inputEl.getAttribute('placeholder') === 'CONNECT') {
+    let currentAttribute = inputEl.getAttribute('placeholder');
+    if (currentAttribute === 'CONNECT' || currentAttribute === 'PLAY AGAIN') {
         init();
         power();
         inputEl.setAttribute('placeholder', '');
@@ -358,9 +359,10 @@ function renderEndGame(cond) {
                 <h1 id="score">${numWordsCompleted}</h1>
                 <h5>words per minute!</h5>
                 </div>`;
-                // <h3 id="replay">Play again?</h3>
-                let scoreEl = document.querySelector('#score');
+    let scoreEl = document.querySelector('#score');
     screenEl.scrollTop = scoreEl.offsetTop;
+    inputEl.blur();
+    inputEl.setAttribute('placeholder', 'PLAY AGAIN');
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();

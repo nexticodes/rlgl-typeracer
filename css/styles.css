@@ -131,7 +131,7 @@ body {
 input {
     height: 5rem;
     width: 25rem;
-    font-size: 36px;
+    font-size: 32px;
     border: none;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
@@ -403,23 +403,20 @@ footer {
 }
 
 @keyframes shake {
-    0% {
-        transform: translateX(0rem);
-    }
     20% {
-        transform: translateX(-.1rem);
+        transform: translateX(-.2rem);
     }
     40% {
-        tranform: translateX(.1rem);
+        tranform: translateX(0rem);
     }
     60% {
-        transform: translateX(-.1rem);
+        transform: translateX(0.2rem);
     }
     80% {
-        transform: translateX(.1rem);
+        transform: translateX(0rem);
     } 
     100% {
-        transform: translateX(0rem);
+        transform: translateX(-0.2rem);
     }
 }
 
