@@ -16,10 +16,168 @@ body {
     overflow: hidden;
 }
 
+.backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 50;
+    background: black ;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+.modal {
+    position: absolute;
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5vh;
+    z-index: 100;
+    height: 80%;
+    width: 80%;
+    background-color: black;
+    border: 2px solid white;
+    overflow-x: hidden;
+    box-shadow:
+    /* White glow */
+    0 0 3px #fff,
+    0 0 5px #fff,
+    0 0 14px #fff,
+    /* White glow */
+    0 0 18px #fff,
+    0 0 24px #fff,
+    0 0 32px #fff,
+    0 0 35px #fff,
+    0 0 42px #fff;
+    animation: menu 8s infinite;
+}
+
+@keyframes menu {
+    25% {
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px #FE0300,
+        0 0 24px #FE0300,
+        0 0 32px #FE0300,
+        0 0 35px #FE0300,
+        0 0 42px #FE0300 
+    }
+    50% { 
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px #0fa,
+        0 0 24px #0fa,
+        0 0 32px #0fa,
+        0 0 35px #0fa,
+        0 0 42px #0fa
+    }
+    
+    75%{
+        box-shadow:
+        /* White glow */
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 14px #fff,
+        /* Green glow */
+        0 0 18px rgb(0, 153, 255),
+        0 0 24px rgb(0, 153, 255),
+        0 0 32px rgb(0, 153, 255),
+        0 0 35px rgb(0, 153, 255),
+        0 0 42px rgb(0, 153, 255) 
+    }
+}
+
+.modal-content h1 {
+    margin: 60px;
+}
+
+.modal-content h2 {
+    margin-top: 60px;
+}
+
+.modal-content h3 {
+    margin: 20px;
+}
+
+.rules {
+    font-size: 8px;
+}
+
+.game-title {
+    font-size: 50px;
+    position: relative;
+    text-align: center;
+}
+
+small {
+    font-size: 12px
+}
+
+.button{
+    font-size: 24px;
+}
+
+.button:hover {
+    color: rgb(0, 153, 255);
+    text-shadow: 0px 0px 15px rgb(0, 153, 255);
+    animation: float 1s infinite;
+    cursor: pointer;
+}
+
+.text-blue {
+    color: rgb(0, 153, 255);
+    text-shadow: 0px 0px 15px rgb(0, 153, 255);
+}
+
+.text-red {
+    color: rgb(247, 15, 7);
+    text-shadow: 0px 0px 15px rgb(247, 15, 7);
+}
+
+.text-green {
+    color: rgb(7, 247, 7);
+    text-shadow: 0px 0px 15px rgb(7, 247, 7);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 150px;
+}
+
+li {
+    margin-bottom: 5px;
+    line-height: 20px;
+}
+
+.menu {
+    margin-top: 2px;
+}
+
+.hidden {
+    display: none;
+}
+
 .exterior {
     border: 5px solid black;
     border-radius: 5px;
-}
+}   
 
 #screen {
     background-color: black;
@@ -29,16 +187,27 @@ body {
     width: 80%;
     margin: auto;
     padding: 2rem 7rem;
-    overflow-y: scroll;
-    scroll-behavior: auto;
-    scroll-padding-top: 50rem;
     z-index: 5;
+}
+
+.active::-webkit-scrollbar {
+    /* width: 2%; */
+    display: none;
+    background-color: black;
+    border: 1px solid white;
+}
+
+.active::-webkit-scrollbar-thumb {
+    background-color: whitesmoke;
 }
 
 
 .active {
     border: 5px double white;
     box-shadow: 0px 0px 25px inset whitesmoke;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+    scroll-padding-top: 50rem;
 }
 
 #screen > p {
@@ -120,7 +289,7 @@ body {
 input {
     height: 5rem;
     width: 25rem;
-    font-size: 36px;
+    font-size: 32px;
     border: none;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
@@ -383,12 +552,11 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 5;
+    z-index: 200;
 }
 
 .shake {
-    animation: shake 0.5s infinite;
-    transform: translateX(0rem);
+    animation: shake 0.25s forwards;
 }
 
 @keyframes shake {
@@ -396,19 +564,19 @@ footer {
         transform: translateX(0rem);
     }
     20% {
-        transform: translateX(-.1rem);
+        transform: translateX(-.2rem);
     }
     40% {
-        tranform: translateX(.1rem);
+        tranform: translateX(0rem);
     }
     60% {
-        transform: translateX(-.1rem);
+        transform: translateX(0.2rem);
     }
     80% {
-        transform: translateX(.1rem);
+        transform: translateX(0rem);
     } 
     100% {
-        transform: translateX(0rem);
+        transform: translateX(-0.1rem);
     }
 }
 

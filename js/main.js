@@ -54,18 +54,28 @@ const gameContainerEl = document.querySelector('.game-container');
 const lightEl = document.querySelector('.light');
 // timer element.
 const timerEl = document.querySelector('#timer');
+// start button.
+const startButton = document.querySelector('.play');
+// rules button.
+const rulesButton = document.querySelector('.rules');
+// menu button
+const menuButton = document.querySelector('.menu');
+// modal
+const modal = document.querySelector('.modal');
+// backdrop
+const backdrop = document.querySelector('.backdrop');
 
 // current word element. DYNAMIC.
 let currentWordEl;
-// start button.
-// const startButton = document.querySelector('');
-// rules button.
-// const rulesButton = document.querySelector('');
 
 
 /*----- event listeners -----*/
 // start button
+startButton.addEventListener('click', displayGame);
 // rules button
+rulesButton.addEventListener('click', toggleRules);
+// menu button
+menuButton.addEventListener('click', toggleRules)
 // input element listener
 // --> input
 inputEl.addEventListener('input', inputController);
@@ -80,7 +90,8 @@ inputEl.addEventListener('focusout', handleFocus);
 function init() {
     time = 0;
     currWPM = 0;
-    wordsToDisplay = articles[Math.floor(Math.random(4))].split(' ');
+    wordsToDisplay = articles[Math.floor(Math.random() * 4)].split(' ');
+    // wordsToDisplay = articles[1].split(' '); // Testing
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
@@ -146,7 +157,7 @@ function startTimer() {
 function inputController(e) {
     if (currColor.color !== 'red' && isGameActive) {
         let playerInput = e.target.value;
-        isInputValid = wordsArr[currWordIdx].includes(playerInput);
+        isInputValid = wordsArr[currWordIdx].includes(playerInput) && wordsArr[currWordIdx][0] === playerInput[0];
         if (isInputValid) {
             inputEl.style.color = '#0fa';
             currentWordEl.classList.remove('invalid');
@@ -177,7 +188,9 @@ function updateCurrentWord() {
     currentWordEl = document.querySelector(`#w${currWordIdx}`);
     if (currentWordEl){
         currentWordEl.classList.add('current');
-        currentWordEl.scrollIntoView();
+        if (numWordsCompleted >= 15){
+            screenEl.scrollTop = currentWordEl.offsetTop;
+        }
     }
 };
 
@@ -202,18 +215,18 @@ function renderLight() {
 };
 // 6) FUN: render function for when user types while light is red. changes green neon to red. maybe activate static effect.
 function renderDamageTaken() {
+    screenEl.classList.add('shake');
     gameContainerEl.classList.replace('neon-valid', 'neon-invalid');
     let blinkTimer = 0;
-    let shakeTimer = 0;
+    // let shakeTimer = 0;
     let damageInterval = setInterval(function () {
-        if (blinkTimer === 4 && shakeTimer === 1000) {
+        if (blinkTimer === 1) screenEl.classList.remove('shake');
+        if (blinkTimer === 4) {
             gameContainerEl.classList.toggle('neon-invalid');
-            screenEl.classList.toggle('shake');
             clearInterval(damageInterval);
         };
         blinkTimer++;
-        shakeTimer += 250;
-        screenEl.classList.toggle('shake');
+        // shakeTimer += 250;
         gameContainerEl.classList.toggle('neon-invalid');
 
     }, 250);
@@ -249,12 +262,13 @@ function getRandomSec(color) {
 function handleFocus() {
     isPlayerConnected = !isPlayerConnected;
     inputEl.classList.toggle('disconnected');
-    if (inputEl.getAttribute('placeholder') === 'CONNECT') {
+    let currentAttribute = inputEl.getAttribute('placeholder');
+    if (currentAttribute === 'CONNECT' || currentAttribute === 'PLAY AGAIN') {
         init();
         power();
-        inputEl.setAttribute('placeholder', '');
+        inputHelper('');
     } else {
-        inputEl.setAttribute('placeholder', 'CONNECT');
+        inputHelper('CONNECT');
         gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
         isGameActive = false;
         clearTimeout();
@@ -338,8 +352,7 @@ function takeDamage() {
 function updatePoints() {
     numWordsCompleted++;
     currWordIdx++;
-    if (numWordsCompleted === currWordIdx + 1) {
-    // if (numWordsCompleted === 1){ //testing
+    if (numWordsCompleted === wordsArr.length) {
         renderEndGame('won');
     }
 }
@@ -352,11 +365,13 @@ function renderEndGame(cond) {
     screenOutputEl.innerHTML = `
         <div id="result-screen">
             <h2>YOU ${cond.toUpperCase()}!</h2>
-                <h6>you typed </h6>
+                <h5>you typed </h5>
                 <h1 id="score">${numWordsCompleted}</h1>
-                <h6>words per minute!</h6>
-                <h3 id="replay">Play again?</h3>
-        </div>`;
+                <h5>words per minute!</h5>
+                </div>`;
+    let scoreEl = document.querySelector('#score');
+    screenEl.scrollTop = scoreEl.offsetTop;
+    inputHelper('PLAY AGAIN');
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
@@ -364,4 +379,23 @@ function renderEndGame(cond) {
 
 function clearIntervals() {
     intervals.forEach(i => clearInterval(i));
+}
+
+function inputHelper(ph) {
+    if (ph === 'PLAY AGAIN'){
+        inputEl.blur();
+        inputEl.setAttribute('placeholder', 'PLAY AGAIN');
+    } else {
+        inputEl.setAttribute('placeholder', ph);
+    }
+}
+
+function toggleRules() {
+    document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
+    document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
+};
+
+function displayGame(){
+    modal.classList.toggle('hidden');
+    backdrop.classList.toggle('hidden');
 }
