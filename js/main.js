@@ -11,9 +11,6 @@ const articles = [`I wanted you to see what real courage is, instead of getting 
 let timer;
 // array of words that will be rendered.
 let wordsArr;
-// array representation of the words need to be typed.
-// [0,0,0,0,0] = array of 5 words, 0 meaning not completed yet. -1 wrong, 1 completed.
-// let wordsSwitch;
 // Is the input valid.
 let isInputValid;
 // is game active;
@@ -30,8 +27,6 @@ let lightColors;
 let lightIndex;
 // number of words completed.
 let numWordsCompleted;
-// timer interval.
-let timerInterval;
 // time passed.
 let timePassed;
 // randomLightSec that will hold value representing secs light will display.
@@ -83,7 +78,6 @@ inputEl.addEventListener('input', inputController);
 inputEl.addEventListener('focusin', handleFocus);
 // --> unfocus
 inputEl.addEventListener('focusout', handleFocus);
-// restart game button
 
 /*----- functions -----*/
 // init function initialize all variables.
@@ -91,7 +85,6 @@ function init() {
     time = 0;
     currWPM = 0;
     wordsToDisplay = articles[Math.floor(Math.random() * 4)].split(' ');
-    // wordsToDisplay = articles[1].split(' '); // Testing
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
@@ -207,9 +200,6 @@ function renderHearts() {
 };
 // 5) render function for light change
 function renderLight() {
-    // green light for 4-8 seconds.
-    // yellow light for 1 - 1.5 seconds.
-    // set red light between 3-6 seconds.
     lightEl.classList.remove('red', 'yellow', 'green', 'white', 'blue');
     lightEl.classList.add(currColor.color);
 };
@@ -228,14 +218,12 @@ function renderDamageTaken() {
         blinkTimer++;
         // shakeTimer += 250;
         gameContainerEl.classList.toggle('neon-invalid');
-
     }, 250);
     renderHearts();
 };
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
-// NOTE timePassed variable is more like timePassed since light switch.
 function lightHelper() {
     // if light is green and timePassed is equal to random switch time.
     if (randomLightSec === timePassed) {
@@ -358,7 +346,7 @@ function updatePoints() {
 }
 
 // render end game function will:
-// should clear all intervals in the game. Ideally.
+// should clear all intervals in the game.
 // display how many words they have completed.
 function renderEndGame(cond) {
     isGameActive = false;
@@ -372,8 +360,7 @@ function renderEndGame(cond) {
     let scoreEl = document.querySelector('#score');
     screenEl.scrollTop = scoreEl.offsetTop;
     inputHelper('PLAY AGAIN');
-    // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
-    // Stop the timer
+    // Clear all intervals
     clearIntervals();
 };
 
@@ -390,12 +377,12 @@ function inputHelper(ph) {
     }
 };
 
-// function toggleRules() {
-//     document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
-//     document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
-// };
+function toggleRules() {
+    document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
+    document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
+};
 
-// function displayGame(){
-//     modal.classList.toggle('hidden');
-//     backdrop.classList.toggle('hidden');
-// };
+function displayGame(){
+    modal.classList.toggle('hidden');
+    backdrop.classList.toggle('hidden');
+};
