@@ -51,6 +51,8 @@ const lightEl = document.querySelector('.light');
 const timerEl = document.querySelector('#timer');
 // start button.
 const startButton = document.querySelector('.play');
+// lets play button.
+const playButton = document.querySelector('#lets-play');
 // rules button.
 const rulesButton = document.querySelector('.rules');
 // menu button
@@ -67,6 +69,8 @@ let currentWordEl;
 /*----- event listeners -----*/
 // start button
 startButton.addEventListener('click', displayGame);
+// lets play button from rules
+playButton.addEventListener('click', displayGame);
 // rules button
 rulesButton.addEventListener('click', toggleRules);
 // menu button
