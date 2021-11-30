@@ -231,7 +231,7 @@ function renderDamageTaken() {
 
     }, 250);
     renderHearts();
-}
+};
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
@@ -274,7 +274,7 @@ function handleFocus() {
         clearTimeout();
         clearIntervals();
     }
-}
+};
 
 
 // Power up function that will apply all styles signifying power up.
@@ -285,7 +285,7 @@ function power() {
     flickerGoLight();
     fillHearts();
     startCountdownToGame();
-}
+};
 
 function fillHearts() {
     let hIdx = 0;
@@ -296,7 +296,7 @@ function fillHearts() {
         document.querySelector(`#h${hIdx}`).classList.replace('none', 'full');
         hIdx++;
     }, 500);
-}
+};
 
 
 function flickerGoLight() {
@@ -313,7 +313,7 @@ function flickerGoLight() {
         increment++;
     }, 250);
     intervals.push(lightFlickInterval);
-}
+};
 
 function startCountdownToGame() {
     countdownToGame = 5;
@@ -336,7 +336,7 @@ function startCountdownToGame() {
         }
     }, 1000);
     intervals.push(cdInterval);
-}
+};
 
 function takeDamage() {
     let numLives = hearts.reduce((a, c) => {
@@ -347,7 +347,7 @@ function takeDamage() {
     if ( numLives == 1 ){
         renderEndGame('lost');
     }
-}
+};
 
 function updatePoints() {
     numWordsCompleted++;
@@ -375,11 +375,11 @@ function renderEndGame(cond) {
     // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
     // Stop the timer
     clearIntervals();
-}
+};
 
 function clearIntervals() {
     intervals.forEach(i => clearInterval(i));
-}
+};
 
 function inputHelper(ph) {
     if (ph === 'PLAY AGAIN'){
@@ -388,14 +388,14 @@ function inputHelper(ph) {
     } else {
         inputEl.setAttribute('placeholder', ph);
     }
-}
-
-function toggleRules() {
-    document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
-    document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
 };
 
-function displayGame(){
-    modal.classList.toggle('hidden');
-    backdrop.classList.toggle('hidden');
-}
+// function toggleRules() {
+//     document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
+//     document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
+// };
+
+// function displayGame(){
+//     modal.classList.toggle('hidden');
+//     backdrop.classList.toggle('hidden');
+// };
