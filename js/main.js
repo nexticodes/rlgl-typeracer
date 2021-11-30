@@ -102,7 +102,7 @@ function init() {
             timeMin: 2,
             timeMax: 5
         }
-    ]
+    ];
     lightIndex = 0;
     currColor = lightColors[lightIndex];
     randomLightSec = getRandomSec(currColor);
@@ -352,9 +352,9 @@ function renderEndGame(cond) {
     screenOutputEl.innerHTML = `
         <div id="result-screen">
             <h2>YOU ${cond.toUpperCase()}!</h2>
-                <h5>you typed </h5>
+                <h5>you scored</h5>
                 <h1 id="score">${numWordsCompleted}</h1>
-                <h5>words per minute!</h5>
+                <h5>point${(numWordsCompleted === 1) ? '' : 's'}!</h5>
                 </div>`;
     let scoreEl = document.querySelector('#score');
     screenEl.scrollTop = scoreEl.offsetTop;
