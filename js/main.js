@@ -54,18 +54,28 @@ const gameContainerEl = document.querySelector('.game-container');
 const lightEl = document.querySelector('.light');
 // timer element.
 const timerEl = document.querySelector('#timer');
+// start button.
+const startButton = document.querySelector('.play');
+// rules button.
+const rulesButton = document.querySelector('.rules');
+// menu button
+const menuButton = document.querySelector('.menu');
+// modal
+const modal = document.querySelector('.modal');
+// backdrop
+const backdrop = document.querySelector('.backdrop');
 
 // current word element. DYNAMIC.
 let currentWordEl;
-// start button.
-// const startButton = document.querySelector('');
-// rules button.
-// const rulesButton = document.querySelector('');
 
 
 /*----- event listeners -----*/
 // start button
+startButton.addEventListener('click', displayGame);
 // rules button
+rulesButton.addEventListener('click', toggleRules);
+// menu button
+menuButton.addEventListener('click', toggleRules)
 // input element listener
 // --> input
 inputEl.addEventListener('input', inputController);
@@ -378,4 +388,14 @@ function inputHelper(ph) {
     } else {
         inputEl.setAttribute('placeholder', ph);
     }
+}
+
+function toggleRules() {
+    document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
+    document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
+};
+
+function displayGame(){
+    modal.classList.toggle('hidden');
+    backdrop.classList.toggle('hidden');
 }

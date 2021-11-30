@@ -103,8 +103,16 @@ body {
     margin: 60px;
 }
 
+.modal-content h2 {
+    margin-top: 60px;
+}
+
 .modal-content h3 {
     margin: 20px;
+}
+
+.rules {
+    font-size: 8px;
 }
 
 .game-title {
@@ -150,7 +158,16 @@ small {
     width: 100%;
     justify-content: center;
     align-items: center;
-    padding: 20px 50px;
+    padding: 40px 150px;
+}
+
+li {
+    margin-bottom: 5px;
+    line-height: 20px;
+}
+
+.menu {
+    margin-top: 2px;
 }
 
 .hidden {
