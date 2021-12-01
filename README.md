@@ -1,4 +1,4 @@
-# RLGLType.io
+# RLGLType.io 
 -----------
 ## Overview
 -----------
@@ -13,7 +13,8 @@ The game ends when one of the following scenarios are met:
 
 When a game is finished, the game will display the player’s words per minute for that particular game / scenario, if the player won the game or not, and an option to play the game.
 
----
+[Click here to play the game!](https://nexticodes.github.io/rlgl-typeracer/)
+
 ## Screenshots
 ---
 |Homepage  |  Rules   |
@@ -29,6 +30,11 @@ When a game is finished, the game will display the player’s words per minute f
 ------
 ![Wireframe](assets/img/wireframe.png)
 
+## Technologies Used
+---
+HTML, CSS, JavaScript
+
+---
 
 ### What's Next?
 - Have an upload button that allows the user to enter their own passage that they want to type out.
