@@ -39,7 +39,7 @@ body {
     z-index: 100;
     height: 80%;
     width: 80%;
-    background-color: black;
+    background-color: rgb(26, 26, 26);
     border: 2px solid white;
     overflow-x: hidden;
     box-shadow:

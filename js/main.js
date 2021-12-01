@@ -1,19 +1,11 @@
 /*----- constants -----*/
-// Maybe word Class
-const articles = [`I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It's when you know you're licked before you begin, but you begin anyway and see it through no matter what.`,
-    `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all; the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`,
-    `Hello babies. Welcome to Earth. It's hot in the summer and cold in the winter. It's round and wet and crowded. On the outside, babies, you've got a hundred years here. There's only one rule that I know of, babies: "God damn it, you've got to be kind."`,
-    `Because it is my name! Because I cannot have another in my life! Because I lie and sign myself to lies! Because I am not worth the dust on the feet of them that hang! How may I live without my name? I have given you my soul; leave me my name!`];
-
+const articles = [`I wanted you to see what real courage is, instead of getting the idea that courage is a man with a gun in his hand. It's when you know you're licked before you begin, but you begin anyway and see it through no matter what.`, `To the well-organized mind, death is but the next great adventure. You know, the Stone was really not such a wonderful thing. As much money and life as you could want! The two things most human beings would choose above all; the trouble is, humans do have a knack of choosing precisely those things that are worst for them.`, `Hello babies. Welcome to Earth. It's hot in the summer and cold in the winter. It's round and wet and crowded. On the outside, babies, you've got a hundred years here. There's only one rule that I know of, babies: "God damn it, you've got to be kind."`, `Because it is my name! Because I cannot have another in my life! Because I lie and sign myself to lies! Because I am not worth the dust on the feet of them that hang! How may I live without my name? I have given you my soul; leave me my name!`];
 
 /*----- app's state (variables) -----*/
 // Timer
 let timer;
 // array of words that will be rendered.
 let wordsArr;
-// array representation of the words need to be typed.
-// [0,0,0,0,0] = array of 5 words, 0 meaning not completed yet. -1 wrong, 1 completed.
-// let wordsSwitch;
 // Is the input valid.
 let isInputValid;
 // is game active;
@@ -30,8 +22,6 @@ let lightColors;
 let lightIndex;
 // number of words completed.
 let numWordsCompleted;
-// timer interval.
-let timerInterval;
 // time passed.
 let timePassed;
 // randomLightSec that will hold value representing secs light will display.
@@ -56,6 +46,8 @@ const lightEl = document.querySelector('.light');
 const timerEl = document.querySelector('#timer');
 // start button.
 const startButton = document.querySelector('.play');
+// lets play button.
+const playButton = document.querySelector('#lets-play');
 // rules button.
 const rulesButton = document.querySelector('.rules');
 // menu button
@@ -72,6 +64,8 @@ let currentWordEl;
 /*----- event listeners -----*/
 // start button
 startButton.addEventListener('click', displayGame);
+// lets play button from rules
+playButton.addEventListener('click', displayGame);
 // rules button
 rulesButton.addEventListener('click', toggleRules);
 // menu button
@@ -83,7 +77,6 @@ inputEl.addEventListener('input', inputController);
 inputEl.addEventListener('focusin', handleFocus);
 // --> unfocus
 inputEl.addEventListener('focusout', handleFocus);
-// restart game button
 
 /*----- functions -----*/
 // init function initialize all variables.
@@ -91,7 +84,6 @@ function init() {
     time = 0;
     currWPM = 0;
     wordsToDisplay = articles[Math.floor(Math.random() * 4)].split(' ');
-    // wordsToDisplay = articles[1].split(' '); // Testing
     wordsArr = wordsToDisplay.map(e => e + ' ');
     hearts = [1, 1, 1, 1, 1];
     lightColors = [
@@ -110,7 +102,7 @@ function init() {
             timeMin: 2,
             timeMax: 5
         }
-    ]
+    ];
     lightIndex = 0;
     currColor = lightColors[lightIndex];
     randomLightSec = getRandomSec(currColor);
@@ -207,9 +199,6 @@ function renderHearts() {
 };
 // 5) render function for light change
 function renderLight() {
-    // green light for 4-8 seconds.
-    // yellow light for 1 - 1.5 seconds.
-    // set red light between 3-6 seconds.
     lightEl.classList.remove('red', 'yellow', 'green', 'white', 'blue');
     lightEl.classList.add(currColor.color);
 };
@@ -228,14 +217,12 @@ function renderDamageTaken() {
         blinkTimer++;
         // shakeTimer += 250;
         gameContainerEl.classList.toggle('neon-invalid');
-
     }, 250);
     renderHearts();
 };
 
 // Helper function that checks on timePassed global variable.
 // Certain things will trigger as time passes.
-// NOTE timePassed variable is more like timePassed since light switch.
 function lightHelper() {
     // if light is green and timePassed is equal to random switch time.
     if (randomLightSec === timePassed) {
@@ -358,22 +345,21 @@ function updatePoints() {
 }
 
 // render end game function will:
-// should clear all intervals in the game. Ideally.
+// should clear all intervals in the game.
 // display how many words they have completed.
 function renderEndGame(cond) {
     isGameActive = false;
     screenOutputEl.innerHTML = `
         <div id="result-screen">
             <h2>YOU ${cond.toUpperCase()}!</h2>
-                <h5>you typed </h5>
+                <h5>you scored</h5>
                 <h1 id="score">${numWordsCompleted}</h1>
-                <h5>words per minute!</h5>
+                <h5>point${(numWordsCompleted === 1) ? '' : 's'}!</h5>
                 </div>`;
     let scoreEl = document.querySelector('#score');
     screenEl.scrollTop = scoreEl.offsetTop;
     inputHelper('PLAY AGAIN');
-    // gameContainerEl.classList.replace('neon-valid', 'neon-unloading');
-    // Stop the timer
+    // Clear all intervals
     clearIntervals();
 };
 
@@ -390,12 +376,12 @@ function inputHelper(ph) {
     }
 };
 
-// function toggleRules() {
-//     document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
-//     document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
-// };
+function toggleRules() {
+    document.querySelectorAll('.modal-content')[0].classList.toggle('hidden');
+    document.querySelectorAll('.modal-content')[1].classList.toggle('hidden');
+};
 
-// function displayGame(){
-//     modal.classList.toggle('hidden');
-//     backdrop.classList.toggle('hidden');
-// };
+function displayGame(){
+    modal.classList.toggle('hidden');
+    backdrop.classList.toggle('hidden');
+};
